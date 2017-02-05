@@ -56,7 +56,7 @@ h4{
 					<span class="input-group-addon" style="background-color: #ffffff;">
 					   <span class="glyphicon glyphicon-user"></span>
 					</span>
-					<input id="TxtUserName" name="TxtUserName" type="text" maxLength=20 class="form-control" style="width: 240px;" placeholder="请输入用户名">
+					<input id="username" name="username" type="text" maxLength=20 class="form-control" style="width: 240px;" placeholder="请输入用户名">
 				</div><!-- /input-group -->
 			</div><!-- /.col-lg-6 --><br>
 
@@ -67,7 +67,7 @@ h4{
 					 	
 					 </span>
 					</span>
-					<input id="TxtPassword" name="TxtPassword" type="password" class="form-control" style="width: 240px;" placeholder="请输入密码">
+					<input id="password" name="password" type="password" class="form-control" style="width: 240px;" placeholder="请输入密码">
 				</div><!-- /input-group -->
 			</div><!-- /.col-lg-6 -->
 			<div>

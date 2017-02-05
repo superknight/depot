@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import dsy.dao.BaseJdbcDao;
 
@@ -20,7 +21,7 @@ public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
 	}
 	
 	@Override
-	public Connection getconntion() throws Exception{
+	public Connection getconntion(){
 		return super.getConnection();
 	}
 	
@@ -36,4 +37,10 @@ public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
 		}
         return rs;
     }
+
+	@Override
+	public SqlRowSet execRowset(String sql) {
+		SqlRowSet rowset = this.getJdbcTemplate().queryForRowSet(sql);
+        return rowset;
+	}
 }

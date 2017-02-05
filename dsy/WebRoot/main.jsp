@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>南沙电子站牌后台管理系统</title>
+<title>电商平台后台安全管理系统</title>
 <%@include file="/H-ui/public.jsp"%>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/lib/jquery/1.9.1/jquery.js"></script>
@@ -12,7 +12,7 @@
 
 </head>
 <body style="background-image:url(./img/mm.jpg);background-size:cover;">
-<header class="Hui-header cl"> <a class="Hui-logo l"  href="/">南沙电子站牌后台管理系统</a>
+<header class="Hui-header cl"> <a class="Hui-logo l"  href="/">电商平台后台安全管理系统</a>
 	<ul class="Hui-userbar">
 		<li>超级管理员</li>
 		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>

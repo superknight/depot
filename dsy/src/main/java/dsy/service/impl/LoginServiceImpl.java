@@ -22,20 +22,23 @@ public class LoginServiceImpl implements LoginService {
 		if(user == null || StringUtil.isBlank(user.getUsername())){
 			return null;
 		}
-		String sql="select * from sec_user where USERNAME='"+user.getUsername()+"' and PASSWORD='"
-				+user.getPassword();
+		String sql="select * from sec_user where username='"+user.getUsername()+"' and password='"
+				+user.getPassword()+"'";
 		ResultSet rs=this.baseJdbcDao.execResultSet(sql);
+		
+		SecUser secUser=new SecUser();
 		try {
-			user.setName(rs.getString("NAME"));
-			user.setUsername(rs.getString("USERNAME"));
-			user.setSex(rs.getString("SEX"));
-			user.setPassword(rs.getString("PASSWORD"));
-			user.setStatus(rs.getString("STATUS"));
+			while(rs.next()){
+			secUser.setName(rs.getString("name"));
+			secUser.setUsername(rs.getString("username"));
+			secUser.setSex(rs.getString("sex"));
+			secUser.setPassword(rs.getString("password"));
+			secUser.setStatus(rs.getString("status"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(user.getName());
-		return user;
+		return secUser;
 	}
 
 	
