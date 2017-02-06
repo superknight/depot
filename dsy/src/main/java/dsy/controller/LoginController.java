@@ -67,16 +67,40 @@ public class LoginController {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "menu.html")
 	@ResponseBody
 	public JSONObject getMenu(HttpServletRequest request) throws Exception {
-		
-		int userid=1;
-		List<JSONObject> data=mService.getMenuByUser(userid);
-		JSONObject returnData=new JSONObject();
-		returnData.put("menu", data);
-		return returnData;
-		
+		List<JSONObject> returnData=null;
+		HttpSession session = request.getSession(false);
+		JSONObject data=new JSONObject();
+		try {
+
+			// 从session域中取缓存
+			returnData = (List<JSONObject>) session.getAttribute("menuCache");
+			
+			if (returnData == null) {
+				SecUser user = (SecUser) session.getAttribute("user");
+				if (user != null) {
+					Integer userid = Integer.parseInt(user.getId());
+					System.out.println(userid);
+					returnData = mService.getMenuByUser(userid);
+					System.out.println(returnData);
+				}
+			}
+			if (returnData == null || returnData.isEmpty()) {
+				data.put("data", "");
+				return data;
+			}else {
+				session.setAttribute("menuCache", returnData); // 缓存到session域
+				data.put("data", returnData);
+				return data;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		data.put("data", "999");
+		return data;
 	}
 	
 	@RequestMapping("loginOut.html")

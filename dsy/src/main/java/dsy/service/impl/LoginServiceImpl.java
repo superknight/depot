@@ -29,6 +29,7 @@ public class LoginServiceImpl implements LoginService {
 		SecUser secUser=new SecUser();
 		try {
 			while(rs.next()){
+			secUser.setId(rs.getString("id"));
 			secUser.setName(rs.getString("name"));
 			secUser.setUsername(rs.getString("username"));
 			secUser.setSex(rs.getString("sex"));
