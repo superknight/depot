@@ -10,17 +10,16 @@ public class SecUser {
      private String password;
      private String name;
      private String sex;
-     @DateTimeFormat(pattern = "yyyy-MM-dd")
-     private Date birthday;
+     private String role;
      private String phone;
      private String email;
      private String address;
      private String status;
      private String remark;
      private String creator;
-     private String create_time;
-     private String last_update;
-     private String last_update_time;
+     private String createTime;
+     private String lastUpdate;
+     private String lastUpdateTime;
 	public String getId() {
 		return id;
 	}
@@ -51,11 +50,11 @@ public class SecUser {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public Date getBirthday() {
-		return birthday;
+	public String getRole() {
+		return role;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getPhone() {
 		return phone;
@@ -93,25 +92,24 @@ public class SecUser {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public String getCreate_time() {
-		return create_time;
+	public String getCreateTime() {
+		return createTime;
 	}
-	public void setCreate_time(String create_time) {
-		this.create_time = create_time;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
-	public String getLast_update() {
-		return last_update;
+	public String getLastUpdate() {
+		return lastUpdate;
 	}
-	public void setLast_update(String last_update) {
-		this.last_update = last_update;
+	public void setLastUpdate(String lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
-	public String getLast_update_time() {
-		return last_update_time;
+	public String getLastUpdateTime() {
+		return lastUpdateTime;
 	}
-	public void setLast_update_time(String last_update_time) {
-		this.last_update_time = last_update_time;
+	public void setLastUpdateTime(String lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
 	}
-	
      
      
 }

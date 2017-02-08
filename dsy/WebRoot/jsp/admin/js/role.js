@@ -3,57 +3,20 @@ function reflushTable() {
 	table.draw(false);// 刷新表格数据false为当前页数，true为刷新到第一页
 }
 $(function(){
-	$("#search").click(function() {
-		var json = $("#paramContainer").toJson();
-		$.extend(param, json);
-		table.fnDraw(true);
-	});
-var table= $('.table-sort').dataTable({ 
-	       "processing": true,
-	       "serverSide": true,
-	       "autoWidth":false, //自动获取宽度
-	       "searching": false, //检索栏
-	       "paging": true,
-	       "retrieve": true,
-	       "pagingType": "full_numbers", //分页类型
-          "language": {
-        	"lengthMenu": '<select class="form-control input-xsmall">' +
-        	'<option value="1">1</option>' +'<option value="10">10</option>'
-        	+ '<option value="20">20</option>' + '<option value="30">30</option>' 
-        	+ '<option value="40">40</option>' + '<option value="50">50</option>'
-        	+ '</select><span>条记录</span>',//左上角的分页大小显示。
-        	
-           "sSearch": '<span style="color:#F3745B">从当前数据中检索:</span>',//右上角的搜索文本，可以写html标签
-            "oPaginate": {
-            "sFirst": "首页",
-            "sPrevious": "上页",
-            "sNext": "下页",
-            "sLast": "末页" 
-              },
-              "loadingRecords": "正在获取数据，请稍后..",
-             "zeroRecords": "没有内容",//table tbody内容为空时，tbody的内容。//下面三者构成了总体的左下角的内容。
-              "info": "总共_PAGES_ 页，共 _TOTAL_ 条记录 ",//左下角的信息显示，大写的词为关键字。
-               "infoEmpty": "0条记录",//筛选为空时左下角的显示。
-              "infoFiltered": ""//筛选之后的左下角筛选提示，
-              },
+   var currentDTOpt = { 
             "ajax":{
              "url":"getRoleList.html",
-             "type":"get",
+             "type":"POST",
              "data":function ( d ) {
              //添加额外的参数传给服务器
              d.extra_search = param;
-                },
-             "cache":false,//禁用缓存
-             "dataType": "json",
-             "contentType": 'application/json;charset=UTF-8',
+                }
+           
              },
-             "initComplete": function( settings, json ) {
-            	 $("#total").html("");
-            	 $("#total").append(json.recordsTotal);
-            	  },
-          "aoColumns" : [ //数据列 
+      
+          "columns" : [ //数据列 
                     {
-                        "mDataProp" : "role_id",
+                        "mDataProp" : "roleId",
 						"sClass" : "text-c",
 						"bSortable": false,
 						"mRender" : function(data, type, full) {
@@ -65,27 +28,39 @@ var table= $('.table-sort').dataTable({
 							return html;
 						}
                      },          
-			{data : 'role_name'},
-			{data : 'remark'}, 
-			{data : 'order_number'},
+			{data : 'roleName',"className":"text-c"},
+			{data : 'remark',"className":"text-c"}, 
+			{data : 'orderNumber',"className":"text-c"},
          ],
          "columnDefs":[
              { //定制需要操作的列
             "targets":[4], 
-            "data":"role_id",
+            "data":"roleId",
             "sClass" : "text-c",
 			// data:代表当前的值，full:代表当前行的数据
 			"mRender" : function(data, type, full) {
 				var html="";
 			   	html += '<a style="text-decoration:none" onClick="authorize(\''
 					+data
-					+'\',\''+full.role_name+'\',\'角色授权\',\'role-permission.html\')" href="javascript:;">';
+					+'\',\''+full.roleName+'\',\'角色授权\',\'role-permission.html\')" href="javascript:;">';
 				html += '<i class="Hui-iconfont" style="font-size:18px;color:#B2ED83;">&#xe62d;</i>角色授权</a>';
 				return html;
 			}
-            }]
-          });
+            }],
+            "order":[[1, 'asc']],
+          };
 
+	var dtOption = $.extend({},DT_COMMON_CONFIG, currentDTOpt); // JSON 合并
+	var table = $('.table-sort').DataTable(dtOption); // 渲染DT
+	
+
+	selectCheckAndTable(); //全选与table行选中
+	
+	$("#search").click(function() {
+		var json = $("#paramContainer").toJson();
+		$.extend(param, json);
+		table.draw(true);
+	});
 $("#updaterole").click(function(){
 	var id_array=new Array();  
 	$("input[type='checkbox']:checked").each(function(){  

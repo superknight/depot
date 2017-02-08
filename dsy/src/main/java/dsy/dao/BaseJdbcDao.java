@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
+import util.PagesBean;
+
 public interface BaseJdbcDao {
 	
 	/**
@@ -22,4 +24,17 @@ public interface BaseJdbcDao {
     public ResultSet execResultSet(String sql);
     
     public SqlRowSet execRowset(String sql);
+    
+    
+
+    public SqlRowSet execRowset(String sql, Object[] args);
+    /**
+     * 
+     * @param countSql 查询总数的sql
+     * @param fullSql 查询条件的sql
+     * @param start 起始页
+     * @param length 返回数据条数
+     * @return
+     */
+    public PagesBean JdbcSimplePage(String countSql,String fullSql,int start,int length);
 }

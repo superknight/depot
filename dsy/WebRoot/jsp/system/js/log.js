@@ -10,6 +10,7 @@ $(function(){
 		table.fnDraw(true);
 	});
 
+	selectCheckAndTable(); //全选与table行选中
 var table= $('.table-sort').dataTable({ 
 	       "processing": true,
 	       "serverSide": true,
@@ -67,10 +68,11 @@ var table= $('.table-sort').dataTable({
 							return html;
 						}
                      },          
-			{data : 'operator'},
-			{data : 'operate'}, 
-			{data : 'in_time'},  
+			{data : 'operator',"className":"text-c"},
+			{data : 'operate',"className":"text-c"}, 
+			{data : 'in_time',"className":"text-c"},  
          ],
+         "order":[[3, 'desc']],
           });
 
     });

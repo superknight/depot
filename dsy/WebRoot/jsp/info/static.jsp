@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>  
-  <%@include file="/H-ui/public.jsp"%>
+  <%@include file="/static/public.jsp"%>
     <title>小屏实时信息</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/info/js/static.js"></script>
@@ -57,13 +57,13 @@
 		<table id="dataTable" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="120">信息</th>
-					<th width="50">开始时间</th>
-					<th width="50">截止时间</th>
-					<th width="75">关联站台</th>
+					<th width="25"><input type="checkbox" id="selectAll" name="" value=""></th>
+					<th width="250">信息</th>
+					<th width="200">开始时间</th>
+					<th width="200">截止时间</th>
+					<th width="120">关联站台</th>
 					<th width="60">审核状态</th>
-					<th width="50">更新时间</th>
+					<th width="200">更新时间</th>
 					<th width="120">操作</th>
 				</tr>
 			</thead>

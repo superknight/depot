@@ -1,6 +1,6 @@
 $(function(){
 	var index=layer.load(2);
-	var userid=getUrlParam("userid");
+	var userid=getUrlParam("userId");
 	$.ajax({
 		"url":"getUserRole.html",
 		"type":"POST",

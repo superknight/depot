@@ -2,14 +2,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-  <%@include file="/H-ui/public.jsp"%>
+  <%@include file="/static/public.jsp"%>
     <title>新增角色</title>
-     <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/js/H-ui.js"></script> 
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/js/H-ui.admin.js"></script>
+     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.js"></script> 
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.admin.js"></script>
     
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/lib/icheck/jquery.icheck.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/lib/Validform/5.3.2/Validform.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/admin/js/role_add.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/Validform/5.3.2/Validform.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/user/js/role_add.js"></script>
   </head>
   <body>
     <div class="pd-20">

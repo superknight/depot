@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import dsy.dao.BaseJdbcDao;
+import util.PagesBean;
 
 public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
 
@@ -42,5 +43,45 @@ public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
 	public SqlRowSet execRowset(String sql) {
 		SqlRowSet rowset = this.getJdbcTemplate().queryForRowSet(sql);
         return rowset;
+	}
+
+	public SqlRowSet execRowset(String sql, Object[] args) {
+        SqlRowSet rowset = this.getJdbcTemplate().queryForRowSet(sql, args);
+        return rowset;
+    }
+	
+	@Override
+	public PagesBean JdbcSimplePage(String countSql, String fullSql, int start, int length) {
+		StringBuffer sbCount = new StringBuffer();
+        sbCount.append(countSql);
+        Connection conn = this.getConnection();
+        ResultSet rs = null;
+        java.sql.PreparedStatement ps = null;
+        PagesBean dto = new PagesBean();
+        int rowCount = 0;
+        try {
+            ps = conn.prepareStatement(fullSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+
+            ps.setMaxRows(start * length);
+
+            rs = ps.executeQuery();
+            // ResultSet rr = execResultSet(sql);
+            SqlRowSet sqlCount = this.execRowset(sbCount.toString(), null);
+            if (null != sqlCount && sqlCount.next()) {
+                // rowCount = Integer.parseInt(sqlCount.getString("TOTAL"));
+                rowCount = Integer.parseInt(sqlCount.getString(1));
+                dto.setItemCount(rowCount);
+            }
+            if (start != 1) {
+                rs.absolute((start - 1) * length);
+            }
+            dto.setResultSet(rs);
+            dto.setItemCount(rowCount);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return dto;
 	}
 }

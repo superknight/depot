@@ -2,14 +2,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <%@include file="/H-ui/public.jsp"%>
+    <%@include file="/static/public.jsp"%>
     <title>用户管理</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/admin/js/user.js"></script>
   </head>
   <body>
    <nav class="breadcrumb"><i class="Hui-iconfont" style="font-size: 18px;">&#xe67f;</i> 首页 
-   <span class="c-gray en">&gt;</span> 用户管理
+   <span class="c-gray en">&gt;</span> 管理员管理
     <span class="c-gray en">&gt;</span> 用户管理
     <a class="btn btn-success radius r mr-20" 
     style="line-height:1.6em;margin-top:3px" 
@@ -42,12 +42,19 @@
             <thead>
                 <tr class="text-c">
                     <th width="25"><input type="checkbox" id="selectAll" name="" value=""></th>
-                    <th width="80">用户名称</th>
+                    <th width="80">姓名</th>
                     <th width="80">用户账号</th>
-                    <th width="120">所属部门</th>
+                    <th width="80">用户密码</th>
+                    <th width="120">性别</th>
                     <th width="80">角色</th>
+                    <th width="80">电话号码</th>
+                    <th width="80">邮箱</th>
+                    <th width="80">地址</th>
                     <th width="80">状态</th>
                     <th width="80">创建人</th>
+                    <th width="80">创建时间</th>
+                    <th width="80">最后修改人</th>
+                    <th width="80">最后修改时间</th>
                     <th width="120">操作</th>
                 </tr>
             </thead>

@@ -9,6 +9,7 @@ $(function(){
 		table.fnDraw(true);
 	});
 
+	selectCheckAndTable(); //全选与table行选中
 var table= $('.table-sort').dataTable({ 
 	       "processing": true,
 	       "serverSide": true,
@@ -63,13 +64,13 @@ var table= $('.table-sort').dataTable({
 							return html;
 						}
                      },          
-			{data : 'title'},
-			{data : 'remark'},
+			{data : 'title',"className":"text-c"},
+			{data : 'remark',"className":"text-c"},
 			{data:null},
-			{data : 'deadline',"bSortable": false,}, 
+			{data : 'deadline',"bSortable": false,"className":"text-c"}, 
 			{data:null},
-			{data : 'operator'},
-			{data : 'review_time',"bSortable": true,}, 
+			{data : 'operator',"className":"text-c"},
+			{data : 'review_time',"bSortable": true,"className":"text-c"}, 
 			{
 				"mDataProp" : "status",
 				"sClass" : "text-c",
@@ -102,51 +103,32 @@ var table= $('.table-sort').dataTable({
 			// data:代表当前的值，full:代表当前行的数据
 			"mRender" : function(data, type, full) {
 				var html = '';
-				html += '<a style="text-decoration:none" onClick="freeze(\''
-						+data
-						+'\')" href="javascript:;" title="冻结">';
+				html += '<a style="text-decoration:none" onClick="look_picture(\''
+						+full.id
+						+'\',\''+full.title+'\',\'info-image.html\')" href="javascript:;">';
 					html += '<i class="Hui-iconfont">&#xe665;</i>查看图片</a>';
 				return html;
 				}
             },
             { //定制需要操作的列
                 "targets":[5], 
-                "data":"id",
+                "data":"station",
                 "sClass" : "text-c",
     			// data:代表当前的值，full:代表当前行的数据
     			"mRender" : function(data, type, full) {
     				var html = '';
-    				html += '<a style="text-decoration:none" onClick="freeze(\''
-    						+data
-    						+'\')" href="javascript:;" title="冻结">';
+    				html += '<a style="text-decoration:none" onClick="look_station(\''
+    						+full.station
+    						+'\',\''+full.title+'\',\'info-station.html\')" href="javascript:;" title="冻结">';
     					html += '<i class="Hui-iconfont">&#xe665;</i>查看站台</a>';
     				return html;
     				}
                 },
-             ]
+             ],
+             "order":[[7, 'desc']],
           });
 
     });
-
-/*静态消息-审核*/
-function article_shenhe(obj,id){
-	layer.confirm('审核文章？', {
-		btn: ['通过','不通过'], 
-		shade: false
-	},
-	function(){
-		$(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已发布', {icon:6,time:1000});
-	},
-	function(){
-		$(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
-		$(obj).remove();
-    	layer.msg('未通过', {icon:5,time:1000});
-	});	
-}
 
 /*静态消息-添加*/
 function static_add(title,url,w,h){
@@ -165,4 +147,63 @@ function article_edit(title,url,w,h){
 		content: url,
 		area: ['500px', '300px']
 	});
+}
+/*查看-图片*/
+function look_picture(id,title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url+"?id="+id,
+		area: ['500px', '500px']
+	});	
+}
+
+/*查看-站台*/
+function look_station(idArray,title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url+"?idArray="+idArray,
+		area: ['500px', '500px']
+	});	
+}
+
+
+/*实时资讯-删除*/
+function datadel(){
+	var id_array=new Array();  
+	$("input[type='checkbox']:checked").each(function(){  
+	    id_array.push($(this).val());//向数组中添加元素  
+	});
+	var num=id_array.length;
+	if(num<=0)
+	{
+		layer.msg("删除请至少选择一项！", {
+			icon : 1,
+			time : 1000
+		});
+	}
+	if(num>0)
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			"url":"deleteRealInfo.html",
+			"type":"POST",
+			"data":{"idArray":id_array.join(",")},
+			"success":function(data){
+				var list=$.parseJSON(data);		
+				if(list.status=='001'){
+					layer.msg('已删除!',1);
+					
+				}
+				if(list.status=='000'){
+					layer.msg('删除失败!',2);
+				}
+			},
+		    "error":function(data){
+		    	layer.msg("操作失败",{icon: 6,time:1000});
+		    }
+		});
+        layer.closeAll();
+        window.location.reload();
+	});	
 }

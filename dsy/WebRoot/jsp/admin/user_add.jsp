@@ -2,16 +2,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <%@include file="/H-ui/public.jsp"%>
+    <%@include file="/static/public.jsp"%>
     
-    <link href="<%=request.getContextPath()%>/H-ui/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/js/H-ui.js"></script> 
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/js/H-ui.admin.js"></script>
-    
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/lib/icheck/jquery.icheck.min.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/lib/Validform/5.3.2/Validform.min.js"></script>  
+    <link href="<%=request.getContextPath()%>/static/lib/icheck/icheck.css" rel="stylesheet" type="text/css" />   
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/Validform/5.3.2/Validform.min.js"></script>  
     <script type="text/javascript" src="<%=request.getContextPath() %>/js/public.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/admin/js/user_add.js"></script>
+    
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.js"></script> 
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.admin.js"></script>  
+    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/user/js/user_add.js"></script>
+    
     <title></title>
   </head>
   <title>添加用户</title>
@@ -22,14 +23,14 @@
 	    <div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>用户名称：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="用户名不能为空">
+				<input type="text" class="input-text" value="" placeholder="" id="realName" name="realName" datatype="*2-16" nullmsg="用户名不能为空">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>用户账号：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="account" name="account" datatype="*2-16" nullmsg="用账号不能为空">
+				<input type="text" class="input-text" value="" placeholder="" id="userName" name="userName" datatype="*2-16" nullmsg="用账号不能为空">
 			</div>
 			<div class="col-4"> </div>
 		</div>

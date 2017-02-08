@@ -2,11 +2,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-  <%@include file="/H-ui/public.jsp"%>
+  <%@include file="/static/public.jsp"%>
     <title>角色授权</title>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/js/H-ui.js"></script> 
-    <script type="text/javascript" src="<%=request.getContextPath()%>/H-ui/js/H-ui.admin.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/admin/js/role_permission.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.js"></script> 
+    <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/user/js/role_permission.js"></script>
   </head>
   <body>
     <div class="pd-10">

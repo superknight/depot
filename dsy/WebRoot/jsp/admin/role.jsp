@@ -2,10 +2,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-  <%@include file="/H-ui/public.jsp"%>
+  <%@include file="/static/public.jsp"%>
     <title>角色管理</title>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/admin/js/role.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/user/js/role.js"></script>
   </head>
   <body>
    <nav class="breadcrumb"><i class="Hui-iconfont" style="font-size: 18px;">&#xe67f;</i> 首页 

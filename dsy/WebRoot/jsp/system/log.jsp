@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>  
-  <%@include file="/H-ui/public.jsp"%>
+  <%@include file="/static/public.jsp"%>
     <title>系统日志</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/system/js/log.js"></script>
@@ -35,7 +35,7 @@
 		<table id="dataTable" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
-					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="25"><input type="checkbox" id="selectAll" name="" value=""></th>
 					<th width="200">用户</th>
 					<th width="250">操作</th>
 					<th width="220">时间</th>
