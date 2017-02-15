@@ -1,3 +1,4 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
 	request.setAttribute("contextPath", contextPath);
@@ -19,7 +20,7 @@
 <![endif]-->
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/My97DatePicker/WdatePicker.js"></script> 
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/dataTables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/layer/layer.js"></script>
 
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/common.js"></script>
@@ -28,4 +29,11 @@
 	Global.contextPath = '${contextPath}';
 	Global.serverPath = '${serverPath}';
 	var Config = Global ;
+	
+	$.fn.dataTable.ext.errMode = function(s,h,m){
+		layer.msg("请求发生错误", {
+			icon : 2,
+			time : 1000
+		});
+	}
 </script>

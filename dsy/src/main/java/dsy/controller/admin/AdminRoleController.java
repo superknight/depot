@@ -1,4 +1,4 @@
-package dsy.controller;
+package dsy.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,31 +7,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dsy.service.admin.UserService;
+import dsy.service.admin.RoleService;
 import net.sf.json.JSONObject;
 
 @Controller
-public class AdminUserController {
+public class AdminRoleController {
 
 	@Autowired
-	private UserService uService;
+	private RoleService roleService;
 	
-	@RequestMapping("adminUser.html")
-	public String AdminUser(){
-		return "jsp/admin/user";
+	@RequestMapping("adminRole.html")
+	public String role(){
+		return "jsp/admin/role";
 	}
 	
-	// 获取用户列表
-	@RequestMapping("adminUser/getAdminUserList.html")
+	// 获取角色列表
+	@RequestMapping("adminUser/getAdminRoleList.html")
 	@ResponseBody
-	public JSONObject getAdminUserList(HttpServletRequest request) {
-			JSONObject data = null;
+	public JSONObject getAdminRoleList(HttpServletRequest request) {
+		   JSONObject data = null;
 			try {
-				data = uService.getUserList(request);
-				
+				data = roleService.getRoleList(request);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return data;
-		}
+	}
 }

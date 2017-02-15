@@ -2,6 +2,7 @@ package dsy.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.List;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -25,6 +26,13 @@ public interface BaseJdbcDao {
     
     public SqlRowSet execRowset(String sql);
     
+    /**
+     * 执行SQL
+     * 
+     * @param sql
+     * @return
+     */
+    public boolean executesql(String sql);
     
 
     public SqlRowSet execRowset(String sql, Object[] args);
@@ -37,4 +45,8 @@ public interface BaseJdbcDao {
      * @return
      */
     public PagesBean JdbcSimplePage(String countSql,String fullSql,int start,int length);
+    
+
+    public PagesBean JdbcSimplePage(String countSql,String fullSql,
+    		int start,int length,List<String> list);
 }

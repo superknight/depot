@@ -165,11 +165,11 @@ var DT_COMMON_CONFIG = {
 	"language" : {
 		"lengthMenu" : '<select class="form-control input-xsmall">'
 				+ '<option value="1">1</option>'
+				+ '<option value="5">5</option>'
 				+ '<option value="10">10</option>'
 				+ '<option value="20">20</option>'
 				+ '<option value="30">30</option>'
 				+ '<option value="40">40</option>'
-				+ '<option value="50">50</option>'
 				+ '</select><span>条记录</span>',// 左上角的分页大小显示。
 
 		"search" : '<span style="color:#F3745B">从当前数据中检索:</span>',// 右上角的搜索文本，可以写html标签

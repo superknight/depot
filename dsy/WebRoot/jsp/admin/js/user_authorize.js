@@ -41,7 +41,7 @@ $(function(){
 				"success":function(data){
 					var list=$.parseJSON(data);
 					if(list.status=='000'){
-						layer.msg(list.data, {
+						layer.msg("授权成功！", {
 							icon : 2,
 							time : 1000
 						});

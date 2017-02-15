@@ -5,7 +5,7 @@
   <%@include file="/static/public.jsp"%>
     <title>角色管理</title>
   <script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/user/js/role.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/admin	/js/role.js"></script>
   </head>
   <body>
    <nav class="breadcrumb"><i class="Hui-iconfont" style="font-size: 18px;">&#xe67f;</i> 首页 
@@ -19,7 +19,7 @@
    </nav>
      <div class="pd-20">
     <div id="paramContainer" class="text-c"> 
-    <input id="rolename" type="text" class="input-text" style="width:250px" placeholder="输入角色名称" id="" name=""> 
+    <input id="role" type="text" class="input-text" style="width:250px" placeholder="输入角色名称" id="" name=""> 
     <button name="search" id="search" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>查询</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> 
@@ -38,7 +38,10 @@
                     <th width="25"><input type="checkbox" id="selectAll" name="" value=""></th>
                     <th width="120">角色名称</th>
                     <th width="120">角色说明</th>
-                    <th width="60">排列序号</th>
+                    <th width="60">创建人</th>
+                    <th width="120">创建时间</th>
+                    <th width="120">最后修改人</th>
+                    <th width="120">最后修改时间</th>
                     <th width="120">操作</th>
                 </tr>
             </thead>

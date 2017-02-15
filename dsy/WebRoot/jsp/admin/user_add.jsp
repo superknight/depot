@@ -11,7 +11,7 @@
     
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.js"></script> 
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.admin.js"></script>  
-    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/user/js/user_add.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/admin/js/user_add.js"></script>
     
     <title></title>
   </head>
@@ -23,14 +23,14 @@
 	    <div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>用户名称：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="realName" name="realName" datatype="*2-16" nullmsg="用户名不能为空">
+				<input type="text" class="input-text" value="" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="用户名不能为空">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>用户账号：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="userName" name="userName" datatype="*2-16" nullmsg="用账号不能为空">
+				<input type="text" class="input-text" value="" placeholder="" id="username" name="username" datatype="*2-16" nullmsg="用账号不能为空">
 			</div>
 			<div class="col-4"> </div>
 		</div>
@@ -42,18 +42,43 @@
 			<div class="col-4"> </div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-3">所属部门：</label>
-			<div class="formControls col-5"><span class="select-box" style="width:150px;">
-				<select class="select" id="dept" name="dept" size="1">
+			<label class="form-label col-3">性别：</label>
+			<div class="formControls col-5"> <span class="select-box" style="width:150px;">
+				<select id="sex" class="select" name="sex" size="1">
+					<option value="0">男</option>
+					<option value="1">女	</option>
 				</select>
-				</span> 
+				</span> </div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>电话号码：</label>
+			<div class="formControls col-5">
+				<input type="text" class="input-text" value="" placeholder="" id="phone" name="phone" datatype="*2-16" nullmsg="用账号不能为空">
 			</div>
 			<div class="col-4"> </div>
 		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>邮箱：</label>
+			<div class="formControls col-5">
+				<input type="text" class="input-text" value="" placeholder="" id="email" name="email" datatype="*2-16" nullmsg="用账号不能为空">
+			</div>
+			<div class="col-4"> </div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-3"><span class="c-red">*</span>地址：</label>
+			<div class="formControls col-5">
+				<input type="text" class="input-text" value="" placeholder="" id="address" name="address" datatype="*6-30" nullmsg="用账号不能为空">
+			</div>
+			<div class="col-4"> </div>
+		</div>
+		
 		<div class="row cl">
 			<label class="form-label col-3">状态：</label>
 			<div class="formControls col-5"> <span class="select-box" style="width:150px;">
-				<select id="status" class="select" name="lock" size="1">
+				<select id="status" class="select" name="status" size="1">
 					<option value="0">未激活</option>
 					<option value="1">已激活	</option>
 				</select>

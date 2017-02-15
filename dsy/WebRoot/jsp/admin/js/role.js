@@ -5,7 +5,7 @@ function reflushTable() {
 $(function(){
    var currentDTOpt = { 
             "ajax":{
-             "url":"getRoleList.html",
+             "url":"adminUser/getAdminRoleList.html",
              "type":"POST",
              "data":function ( d ) {
              //添加额外的参数传给服务器
@@ -16,7 +16,7 @@ $(function(){
       
           "columns" : [ //数据列 
                     {
-                        "mDataProp" : "roleId",
+                        "mDataProp" : "id",
 						"sClass" : "text-c",
 						"bSortable": false,
 						"mRender" : function(data, type, full) {
@@ -28,21 +28,24 @@ $(function(){
 							return html;
 						}
                      },          
-			{data : 'roleName',"className":"text-c"},
+			{data : 'role',"className":"text-c"},
 			{data : 'remark',"className":"text-c"}, 
-			{data : 'orderNumber',"className":"text-c"},
+			{data : 'creator',"className":"text-c"}, 
+			{data : 'createTime',"className":"text-c"}, 
+			{data : 'lastUpdate',"className":"text-c"}, 
+			{data : 'lastUpdateTime',"className":"text-c"},
          ],
          "columnDefs":[
              { //定制需要操作的列
-            "targets":[4], 
-            "data":"roleId",
+            "targets":[7], 
+            "data":"id",
             "sClass" : "text-c",
 			// data:代表当前的值，full:代表当前行的数据
 			"mRender" : function(data, type, full) {
 				var html="";
 			   	html += '<a style="text-decoration:none" onClick="authorize(\''
 					+data
-					+'\',\''+full.roleName+'\',\'角色授权\',\'role-permission.html\')" href="javascript:;">';
+					+'\',\''+full.role+'\',\'角色授权\',\'role-permission.html\')" href="javascript:;">';
 				html += '<i class="Hui-iconfont" style="font-size:18px;color:#B2ED83;">&#xe62d;</i>角色授权</a>';
 				return html;
 			}

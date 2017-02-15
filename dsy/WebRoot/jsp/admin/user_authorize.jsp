@@ -6,7 +6,7 @@
     <title>角色授权</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.js"></script> 
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/H-ui.admin.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/user/js/user_authorize.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/jsp/admin/js/user_authorize.js"></script>
   </head>
   <body>
     <div class="pd-10">

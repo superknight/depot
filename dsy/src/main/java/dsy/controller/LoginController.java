@@ -83,9 +83,7 @@ public class LoginController {
 				SecUser user = (SecUser) session.getAttribute("user");
 				if (user != null) {
 					Integer userid = Integer.parseInt(user.getId());
-					System.out.println(userid);
 					returnData = mService.getMenuByUser(userid);
-					System.out.println(returnData);
 				}
 			}
 			if (returnData == null || returnData.isEmpty()) {

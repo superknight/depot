@@ -10,7 +10,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 public class PagesBean {
 
 
-    protected int itemCount; // 所有的记录数
+	private int itemCount; // 所有的记录数
 	
     public List list;
 

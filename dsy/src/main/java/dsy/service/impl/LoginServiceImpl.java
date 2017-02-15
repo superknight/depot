@@ -24,6 +24,7 @@ public class LoginServiceImpl implements LoginService {
 		}
 		String sql="select * from sec_user where username='"+user.getUsername()+"' and password='"
 				+user.getPassword()+"'";
+		System.out.println(sql);
 		ResultSet rs=this.baseJdbcDao.execResultSet(sql);
 		
 		SecUser secUser=new SecUser();
