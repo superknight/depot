@@ -105,8 +105,7 @@ public class SimpleDataTables implements Serializable {
 		Integer draw = StringUtil.isNotBlank(paramDraw) ? Integer
 				.parseInt(paramDraw) : 1;
 		Integer start = StringUtil.isNotBlank(paramStart) ? Integer
-				.parseInt(paramStart) : 1;
-		start += 1;
+				.parseInt(paramStart) : 0;
 		Integer length = StringUtil.isNotBlank(paramLength) ? Integer
 				.parseInt(paramLength) : 10;
 		String sort = request.getParameter("columns[" + paramSortColum

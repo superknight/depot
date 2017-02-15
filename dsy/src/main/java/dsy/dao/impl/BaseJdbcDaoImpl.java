@@ -1,7 +1,6 @@
 package dsy.dao.impl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -58,7 +57,7 @@ public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
         sbCount.append(countSql);
         Connection conn = this.getConnection();
         ResultSet rs = null;
-        PreparedStatement ps = null;
+        java.sql.PreparedStatement ps = null;
 
         PagesBean dto = new PagesBean();
         int rowCount = 0;
@@ -75,10 +74,9 @@ public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
                 rowCount = Integer.parseInt(sqlCount.getString(1));
                 dto.setItemCount(rowCount);  //获取总数
             }
-            
-            if (start != 1) {
-                rs.absolute(start-1);
-           }
+           
+            rs.absolute(start);
+          
             dto.setResultSet(rs);
             dto.setItemCount(rowCount);
             
@@ -100,42 +98,17 @@ public class BaseJdbcDaoImpl extends JdbcDaoSupport implements BaseJdbcDao {
     }
 
 	@Override
-	public PagesBean JdbcSimplePage(String countSql, String fullSql, int start, int length, List<String> list) {
-	  StringBuffer sbCount = new StringBuffer();
-      sbCount.append(countSql);
-      Connection conn = this.getConnection();
-      ResultSet rs = null;
-      java.sql.PreparedStatement ps = null;
-
-      PagesBean dto = new PagesBean();
-      int rowCount = 0;
-      try {
-    	  for(int i=0;i<list.size();i++){
-        	  ps.setString(i+1, "%"+list.get(i)+"%");
-          }
-          ps = conn.prepareStatement(fullSql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-                  ResultSet.CONCUR_READ_ONLY);
-
-          ps.setMaxRows(start + length);
-          
-          rs = ps.executeQuery();
-          
-          SqlRowSet sqlCount = this.execRowset(sbCount.toString());
-          if (null != sqlCount && sqlCount.next()) {
-              rowCount = Integer.parseInt(sqlCount.getString(1));
-              dto.setItemCount(rowCount);  //获取总数
-          }
-          
-          if (start != 1) {
-              rs.absolute(start-1);
-         }
-          dto.setResultSet(rs);
-          dto.setItemCount(rowCount);
-          
-
-      } catch (Exception e) {
-          e.printStackTrace();
-      } 
-      return dto;
+	public int countExecute(String sql) {
+		int num = 0;
+		try {
+			 num= this.getConnection().createStatement().executeUpdate(sql);
+		} catch (CannotGetJdbcConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return num;
 	}
 }

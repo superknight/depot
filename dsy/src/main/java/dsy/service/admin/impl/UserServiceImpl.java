@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public JSONObject getUserList(HttpServletRequest request) throws Exception {
 
-			String countSql = "select count(*) from sec_user u left join "
-					+ "(select r.id,r.role from sec_user_role ur,sec_role r where ur.role_id=r.id) "
-					+ " urr on u.id=urr.id where 1=1 ";
+		String countSql = "select count(*) from sec_user u left join "
+					+ "(select ur.user_id,r.role from sec_user_role ur,sec_role r where ur.role_id=r.id) "
+					+ " urr on u.id=urr.user_id where 1=1 ";
 		
 		//数据库返回的字段要与前端dataTable的字段和Bean类的字段名字都要相同
 		String fullSql = "select u.id,u.username,u.`password`,"
@@ -41,13 +41,12 @@ public class UserServiceImpl implements UserService {
 				+ " u.address,u.`status`,u.creator,u.create_time as createTime,"
 				+ " u.last_update as lastUpdate,u.last_update_time as lastUpdateTime,"
 				+ " u.remark from sec_user u left join "
-				+ " (select r.id,r.role from sec_user_role ur,sec_role r where ur.role_id=r.id) "
-				+ " urr on u.id=urr.id where 1=1 ";
+				+ " (select ur.user_id,r.role from sec_user_role ur,sec_role r where ur.role_id=r.id) "
+				+ " urr on u.id=urr.user_id where 1=1 ";
 		
 
 		StringBuffer appSql = new StringBuffer();
 		StringBuffer addSql = new StringBuffer();
-		List<String> listLike = new ArrayList<String>();
 		SimpleDataTables dataTables = SimpleDataTables.getFromRequest(request); // 从前端获取的数据
 		
 		String name = request.getParameter("extra_search[username]");
@@ -63,7 +62,6 @@ public class UserServiceImpl implements UserService {
 			}
 		
 		fullSql += appSql.toString() + addSql.toString();
-		System.out.println(fullSql);
 		countSql += appSql.toString();
 		
 		
@@ -150,24 +148,15 @@ public class UserServiceImpl implements UserService {
 	//新增与修改
 	@Override
 	public JSONObject saveAndEditUser(SecUser user,HttpServletRequest request) throws Exception {
-		/*String userid = request.getParameter("userid");
-		String name = request.getParameter("name");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String sex = request.getParameter("sex");
-		String phone = request.getParameter("phone");
-		String email = request.getParameter("email");
-		String address = request.getParameter("address");
-		String status = request.getParameter("status");
-		*/
 		String sql = "";
 		JSONObject returnData = new JSONObject();
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); //格式化当前系统日期
+		//获取创建人
+		SecUser creat = (SecUser) request.getSession().getAttribute("user");
+		String creator = creat.getUsername();
 		//新增
 		if(StringUtil.isBlank(user.getId())){
-			//获取创建人
-			SecUser creat = (SecUser) request.getSession().getAttribute("user");
-			String creator = creat.getUsername();
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); //格式化当前系统日期
 			sql = "insert into sec_user (username,password,name,sex,phone,email,address,status,creator,create_time) "
 					+ " values ('"+user.getUsername()
 					+"','"+user.getPassword()
@@ -187,10 +176,82 @@ public class UserServiceImpl implements UserService {
 				returnData.put("msg", "001");
 			   }
 		}
+		//修改
 		else{
-			
+			sql = "update sec_user "
+			          + " set username='" + user.getUsername()
+			          + "',password='"+ user.getPassword() 
+			          + "',name='" + user.getName() 
+			          + "',sex='" + user.getSex()
+					  + "',phone='" + user.getPhone() 
+					  + "',email='" + user.getEmail()
+					  + "',address='" + user.getAddress()
+					  + "',status='" + user.getStatus()
+					  + "',phone='" + user.getPhone() 
+					  + "',last_update='" + creator
+					  + "',last_update_time='" + df.format(new Date())
+					  + "' where id=" + user.getId();
+				if (this.baseJdbcDao.executesql(sql)) {
+
+					returnData.put("msg", "100");
+				} else {
+					returnData.put("msg", "101");
+				}
+				return returnData;
 		}
 		return returnData;
+	}
+
+	@Override
+	public List<SecUser> getSingleUser(HttpServletRequest request) {
+		String userid = request.getParameter("userid");
+		String sql = "select * from sec_user where id='" + userid + "'";
+		SqlRowSet rs = this.baseJdbcDao.execRowset(sql);
+
+		List<SecUser> list = new ArrayList<SecUser>();
+		while (rs.next()) {
+			SecUser user = new SecUser();
+			user.setId(rs.getString("id"));
+			user.setUsername(rs.getString("username"));
+			user.setPassword(rs.getString("password"));
+			user.setName(rs.getString("name"));
+			user.setSex(rs.getString("sex"));
+			user.setPhone(rs.getString("phone"));
+			user.setEmail(rs.getString("email"));
+			user.setAddress(rs.getString("address"));
+			user.setStatus(rs.getString("status"));
+			
+			list.add(user);
+		}
+
+		return list;
+	}
+
+	@Override
+	public JSONObject deleteUser(HttpServletRequest request) {
+		String idArray = request.getParameter("idArray");
+		String checksql = "select count(*) as count from sec_user where id in ("+idArray+") and id <> 1";
+		JSONObject ret = new JSONObject();
+		SqlRowSet rs = this.baseJdbcDao.execRowset(checksql);
+		int num = 0;
+		while(rs.next()){
+			num = rs.getInt("count");
+		}
+		//检查删除的用户是否包含超级用户
+		if(num > 0){
+		String delsql = "delete from sec_user where id in (" + idArray
+				+ ")";
+		   if(this.baseJdbcDao.executesql(delsql)){
+			   ret.put("status", "000"); //删除成功
+		   }
+		   else{
+			   ret.put("status", "001"); //删除失败
+		   }
+		}
+		else{
+			ret.put("status", "002"); //超级管理员不能被删除
+		}
+		return ret;
 	}
 	
 }

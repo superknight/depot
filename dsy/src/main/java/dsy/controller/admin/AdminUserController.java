@@ -28,6 +28,7 @@ public class AdminUserController {
 		return "jsp/admin/user";
 	}
 	
+	//用户新增与修改
 	@RequestMapping("user-add.html")
 	public String AdminUserAdd(){
 		return "jsp/admin/user_add";
@@ -78,6 +79,7 @@ public class AdminUserController {
 			return data;
 		}
 	
+	//获取用户角色
 	@RequestMapping("getUserRole.html")
 	@ResponseBody
 	public JSONObject getUserRole(HttpServletRequest request) {
@@ -91,6 +93,7 @@ public class AdminUserController {
 
 	}
 	
+	//角色授权
 	@RequestMapping("saveUserRole.html")
 	@ResponseBody
 	public JSONObject saveUserRole(HttpServletRequest request) {
@@ -100,6 +103,32 @@ public class AdminUserController {
 		} else
 			data.put("status", "001"); //授权失败
 		
+		return data;
+	}
+	
+	// 删除用户信息
+	@RequestMapping("deleteUser.html")
+	@ResponseBody
+	public JSONObject deleteUser(HttpServletRequest request) {
+		JSONObject data = null;
+		try {
+			data = uService.deleteUser(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	// 获取单个用户信息
+	@RequestMapping("getSingleUser.html")
+	@ResponseBody
+	public List<SecUser> getSingleUser(HttpServletRequest request) {
+		List<SecUser> data = null;
+		try {
+			data = uService.getSingleUser(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return data;
 	}
 }

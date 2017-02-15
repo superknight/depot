@@ -15,8 +15,14 @@ public interface UserService {
 	//获取所有角色
 	public List<JSONObject> getRoleName();
 	
+	//获取单个用户的信息：用于修改预览
+	public List<SecUser> getSingleUser(HttpServletRequest request);
+	
 	//新增和修改用户
 	public JSONObject saveAndEditUser(SecUser user,HttpServletRequest request) throws Exception;
+	
+	//删除用户信息
+	public JSONObject deleteUser(HttpServletRequest request);
 	
 	//授予用户角色
 	public Boolean saveUserRole(HttpServletRequest request);

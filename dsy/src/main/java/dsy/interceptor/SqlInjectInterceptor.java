@@ -28,7 +28,7 @@ public class SqlInjectInterceptor extends HandlerInterceptorAdapter {
 			String[] values = request.getParameterValues(name);
 			for (int i = 0; i < values.length; i++) {
 				
-//				System.err.println(name+":"+values[i]);
+				System.err.println(name+":"+values[i]);
 				if (ValidationUtil.isSqlInject(values[i].toLowerCase())) {
 					request.setAttribute("msg", messageSource.getMessage("sqlInject", null, request.getLocale()));
 					request.getRequestDispatcher("/error.jsp").forward(request,response);

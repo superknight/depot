@@ -19,34 +19,37 @@
 </head>
 <body>
 <div class="pd-20">
-	<form action="" method="post" class="form form-horizontal" id="paramContainer">
+	<form action="" method="" class="form form-horizontal" id="paramContainer">
 	    <div class="row cl">
-			<label class="form-label col-3"><span class="c-red">*</span>用户名称：</label>
+			<label class="form-label col-3"><span class="c-red">*</span>真实姓名：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="name" name="name" datatype="*2-16" nullmsg="用户名不能为空">
+				<input type="text" class="input-text" value="" placeholder="请输入名字"
+				 id="name" name="name" datatype="s2-6" nullmsg="真实姓名不能为空" errormsg="真实姓名格式不对">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>用户账号：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="username" name="username" datatype="*2-16" nullmsg="用账号不能为空">
+				<input type="text" class="input-text" value="" placeholder="请输入以字母开头的5至20位字母和数字" 
+				id="username" name="username" datatype="/^[a-zA-Z][a-z0-9A-Z]{4,20}$/" nullmsg="账号不能为空"  errormsg="账号格式不对">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>密码：</label>
 			<div class="formControls col-5">
-				<input id="password" type="password" placeholder="密码" autocomplete="off" value="" class="input-text" datatype="*6-20" nullmsg="密码不能为空">
+				<input id="password" type="password" placeholder="请输入密码，至少6位" 
+				autocomplete="off" value="" class="input-text" datatype="s6-20" nullmsg="密码不能为空" errormsg="密码格式不对">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-3">性别：</label>
+			<label class="form-label col-3"><span class="c-red">*</span>性别：</label>
 			<div class="formControls col-5"> <span class="select-box" style="width:150px;">
 				<select id="sex" class="select" name="sex" size="1">
-					<option value="0">男</option>
-					<option value="1">女	</option>
+					<option value="男">男</option>
+					<option value="女">女</option>
 				</select>
 				</span> </div>
 		</div>
@@ -54,23 +57,27 @@
 		<div class="row cl">
 			<label class="form-label col-3"><span class="c-red">*</span>电话号码：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="phone" name="phone" datatype="*2-16" nullmsg="用账号不能为空">
+				<input type="text" class="input-text" value="" 
+				placeholder="请输入手机号码" id="phone" name="phone" 
+				datatype="m" nullmsg="手机号码不能为空" errormsg="手机号码格式不对">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		
 		<div class="row cl">
-			<label class="form-label col-3"><span class="c-red">*</span>邮箱：</label>
+			<label class="form-label col-3">邮箱：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="email" name="email" datatype="*2-16" nullmsg="用账号不能为空">
+				<input type="text" class="input-text" value="" placeholder="请输入邮箱" 
+				id="email" name="email" datatype="e" errormsg="邮箱格式不对">
 			</div>
 			<div class="col-4"> </div>
 		</div>
 		
 		<div class="row cl">
-			<label class="form-label col-3"><span class="c-red">*</span>地址：</label>
+			<label class="form-label col-3">地址：</label>
 			<div class="formControls col-5">
-				<input type="text" class="input-text" value="" placeholder="" id="address" name="address" datatype="*6-30" nullmsg="用账号不能为空">
+				<input type="text" class="input-text" value="" 
+				placeholder="" id="address" name="address" datatype="s6-30" errormsg="地址格式不对">
 			</div>
 			<div class="col-4"> </div>
 		</div>
@@ -95,9 +102,10 @@
 		<div class="row cl">
 			<div class="col-9 col-offset-3">
 				<input id="submit" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				<input id="reset" class="btn btn-primary radius" type="reset" value="&nbsp;&nbsp;重置&nbsp;&nbsp;">
 			</div>
 		</div>
-		<input id="userid" type="hidden" value="" />
+		<input id="id" type="hidden" value="" />
 	</form>
 </div>
   </body>

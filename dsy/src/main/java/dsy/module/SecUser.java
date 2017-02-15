@@ -1,9 +1,5 @@
 package dsy.module;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class SecUser {
 	 private String id;
      private String username;

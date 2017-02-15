@@ -1,23 +1,15 @@
 var param = {};
 $(function(){
 	//打钩验证样式
-	/*$('.skin-minimal input').iCheck({
+	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
-	});*/
-	
-	$("#paramContainer").Validform({
-		tiptype:2,
-		callback:function(){
-			var index = parent.layer.getFrameIndex(window.name);
-			parent.$('.btn-refresh').click();
-			parent.layer.close(index);
-		}
 	});
-	loadRole();
-	loadDept();
 	
+	var demo = $("#paramContainer").Validform({
+		tiptype : 2
+	});
 	var userid=getUrlParam("userid");
 	if(userid){
 
@@ -27,13 +19,17 @@ $(function(){
 			"type":"POST",
 			"data":{"userid":userid},
 			"success":function(data){
-				var list=$.parseJSON(data);
-				    $("#userid").val(list.userid);
-					$("#realName").val(list.realName);
-					$("#userName").val(list.userName);
-					$("#password").val(list.password);
-					$('#dept option[value='+list.dept+']').attr('selected',true);
-					$('#status option[value='+list.status+']').attr('selected',true);
+				var list = $.parseJSON(data);
+				console.log(list[0].name);
+				    $("#id").val(list[0].id);
+				    $("#name").val(list[0].name);
+				    $("#username").val(list[0].username);
+				    $("#password").val(list[0].password);
+					$('#sex option[value='+list[0].sex+']').attr('selected',true);
+				    $("#phone").val(list[0].phone);
+				    $("#email").val(list[0].email);
+				    $("#address").val(list[0].address);
+					$('#status option[value='+list[0].status+']').attr('selected',true);
 					layer.close(index); 
 			},
 		    "error":function(data){
@@ -44,6 +40,13 @@ $(function(){
 	
 	
 	$("#submit").click(function(){
+		if (!demo.check()) {
+			return;
+		}
+		var index = layer.load(1, {
+			shade : [ 0.5, '#fff' ]
+		// 0.1透明度的白色背景
+		});
 		var json = $("#paramContainer").toJson();
 		$.extend(param, json);
 		$.ajax({
@@ -54,26 +57,24 @@ $(function(){
 				var list=$.parseJSON(data);
 				console.log(list);
 				if(list.msg=="000"){
-					layer.msg("新增成功！", 1);
+					layer.msg("新增成功！", {icon: 1,time:1000});
 				}
 				if(list.msg=="001"){
 					
-					layer.msg("新增失败！", 2);
+					layer.msg("新增失败！", {icon: 6,time:1000});
 				}
 				if(list.mst=="002"){
-					layer.msg("账号不能为空！", 2);
+					layer.msg("账号不能为空！", {icon: 5,time:1000});
 				}
 				if(list.msg=="003"){
-					layer.msg("该用户已存在！",5);
+					layer.msg("该用户已存在！",{icon: 5,time:1000});
 				}
 				if(list.msg=="100"){
-					layer.msg("修改成功！",1);
+					layer.msg("修改成功！",{icon: 1,time:1000});
 				}
 				if(list.msg=="101"){
-					layer.msg("修改失败！",1);
+					layer.msg("修改失败！",{icon: 5,time:1000});
 				}
-				
-				
 //				parent.location.reload(); //刷新父窗口
 			},
 		    "error":function(data){
@@ -81,7 +82,6 @@ $(function(){
 		    }
 		});
 	});
-	//layer.close(index);
 	
 });
 

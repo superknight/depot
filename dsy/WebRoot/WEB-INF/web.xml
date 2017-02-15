@@ -3,9 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	<welcome-file-list>
-		<welcome-file>login.jsp</welcome-file>
-	</welcome-file-list>
 	<display-name>dsy</display-name>
 
 	<context-param>
@@ -55,6 +52,6 @@
 		<location>/common/error/404.jsp</location>
 	</error-page>
 	<welcome-file-list>
-		<welcome-file>/welcome.jsp</welcome-file>
+		<welcome-file>/login.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

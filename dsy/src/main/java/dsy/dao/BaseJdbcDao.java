@@ -34,6 +34,12 @@ public interface BaseJdbcDao {
      */
     public boolean executesql(String sql);
     
+    /**
+     * 返回执行条数
+     * @param sql
+     * @return
+     */
+    public int countExecute(String sql);
 
     public SqlRowSet execRowset(String sql, Object[] args);
     /**
@@ -46,7 +52,4 @@ public interface BaseJdbcDao {
      */
     public PagesBean JdbcSimplePage(String countSql,String fullSql,int start,int length);
     
-
-    public PagesBean JdbcSimplePage(String countSql,String fullSql,
-    		int start,int length,List<String> list);
 }

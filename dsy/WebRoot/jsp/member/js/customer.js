@@ -6,7 +6,7 @@ function reflushTable() {
 $(function() {
 	var currentDTOpt = {
 		"ajax" : {
-			"url" : "adminUser/getAdminUserList.html",
+			"url" : "member/getCustomerList.html",
 			"type" : "POST",
 			"data" : function(d) {
 				// 添加额外的参数传给服务器
@@ -27,35 +27,15 @@ $(function() {
 				},
 
 				{
-					"data" : "name",
+					"data" : "customer",
 					"className" : "text-c"
 				},
 				{
-					"data" : "username",
+					"data" : "accout",
 					"className" : "text-c"
 				},
 				{
 					"data" : "password",
-					"className" : "text-c"
-				},
-				{
-					"data" : "sex",
-					"className" : "text-c"
-				},
-				{
-					"data" : "role",
-					"className" : "text-c"
-				},
-				{
-					"data" : "phone",
-					"className" : "text-c"
-				},
-				{
-					"data" : "email",
-					"className" : "text-c"
-				},
-				{
-					"data" : "address",
 					"className" : "text-c"
 				},
 				{
@@ -77,28 +57,26 @@ $(function() {
 						return html;
 					}
 
-				}, {
-					"data" : "creator",
+				},
+				{
+					"data" : "email",
 					"className" : "text-c"
 				},
 				{
-					"data" : "createTime",
+					"data" : "applyTime",
 					"className" : "text-c"
 				},
 				{
-					"data" : "lastUpdate",
+					"data" : "lastUpdator",
 					"className" : "text-c"
 				},
 				{
 					"data" : "lastUpdateTime",
 					"className" : "text-c"
-				},
-				{
-					"data" : "remark",
-					"className" : "text-c"
-				}],
+				}
+				],
 		"columnDefs" : [ { // 定制需要操作的列
-			"targets" : [ 14 ],
+			"targets" : [ 9 ],
 			"data" : "id",
 			"orderable" : false,
 			"className" : "text-c",
@@ -157,82 +135,3 @@ $(function() {
 	});
 
 });
-// 授予角色
-function authorize(userid, name, user, title, url) {
-	layer.open({
-		type : 2,
-		title : title,
-		content : url + "?userId=" + userid + "&realName=" + name + "&userName="
-				+ user,
-		area : [ '500px', '350px' ],
-		cancel: function(index){ 
-//			window.location.reload();
-			table.draw(true);
-		}
-	});
-}
-/* 用户-添加 */
-function adminUser_add(title, url, w, h) {
-	layer.open({
-		type : 2,
-		title : title,
-		content : url,
-		area : [ '600px', '90%' ],
-		cancel: function(index){ 
-			table.draw(true);
-		}
-	});
-}
-/* 用户-修改 */
-function adminUser_edit(userid, title, url) {
-	layer.open({
-		type : 2,
-		title : title,
-		content : url + "?userid=" + userid,
-		area : [ '600px', '90%' ],
-		cancel: function(index){ 
-			table.draw(true);
-		}
-	});
-}
-/* 用户-删除 */
-function datadel() {
-	var id_array = new Array();
-	$("input[type='checkbox']:checked").each(function() {
-		id_array.push($(this).val());// 向数组中添加元素
-	});
-	var num = id_array.length;
-	if (num <= 0) {
-		layer.msg("删除请至少选择一项！", {
-			icon : 1,
-			time : 1000
-		});
-	}
-	if (num > 0)
-		layer.confirm('确认要删除吗？', function(index) {
-			$.ajax({
-				"url" : "deleteUser.html",
-				"type" : "POST",
-				"data" : {
-					"idArray" : id_array.join(",")
-				},
-				"success" : function(data) {
-					var list = $.parseJSON(data);
-					if (list.status == '000') {
-						layer.msg('已删除!', {icon : 1,time : 1000});
-						table.draw(true);
-					}
-					if (list.status == '001') {
-						layer.msg('删除失败!',{icon : 2,time : 1000});
-					}
-					if (list.status == "002"){
-						layer.msg('该用户为超级管理员，没有足够的权限删除！',{icon : 5,time : 1000});
-					}
-				},
-				"error" : function(data) {
-					layer.msg("操作失败", {icon : 6,time : 1000});
-				}
-			});
-//			window.location.reload();
-		});
-}
