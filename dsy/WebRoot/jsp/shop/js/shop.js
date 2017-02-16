@@ -1,4 +1,5 @@
 var param = {};
+var table; 
 function reflushTable() {
 	// table.draw(false);// 刷新表格数据false为当前页数，true为刷新到第一页
 }
@@ -118,7 +119,7 @@ $(function() {
 		"order":[[1, 'asc']]
 	};
 	var dtOption = $.extend({},DT_COMMON_CONFIG, currentDTOpt); // JSON 合并
-	var table = $('.table-sort').DataTable(dtOption); // 渲染DT
+	table = $('.table-sort').DataTable(dtOption); // 渲染DT
 	//检索
 	$("#search").click(function() {
 		var json = $("#paramContainer").toJson();
@@ -168,17 +169,33 @@ function shop_delete(){
 		id_array.push($(this).val());// 向数组中添加元素
 	});
 	var num = id_array.length;
-	console.log(id_array);
+//	console.log(id_array);
+	
 	if (num <= 0) {
 		layer.msg("请选择一项！", {
 			icon : 2,
 			time : 1000
 		});
 	} else {
-		/*shop_delete(id_array, "shop/shop-delete.html");*/
-		layer.msg("冻结成功！", {
-			icon : 2,
-			time : 1000
+		$.ajax({
+			"url":"shop/deletShop.html",
+			"type":"POST",
+			"data": {
+				"idArray" : id_array.join(",")
+			},
+			"dataType" : "json",
+			"success":function(data){
+				if(data.code == '001'){
+					layer.msg("冻结成功",{icon: 1,time:1000});
+					table.draw(true);
+				}else if(data.code == '000'){
+					layer.msg("冻结失败",{icon: 6,time:1000});
+				}
+				
+			},
+		    "error":function(data){
+		    	layer.msg("操作失败",{icon: 6,time:1000});
+		    }
 		});
 	}
 }

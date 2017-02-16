@@ -22,6 +22,7 @@ import common.SimpleDataTables;
 import dsy.dao.BaseJdbcDao;
 import dsy.module.DsyShop;
 import dsy.service.shop.ShopService;
+import dsy.utils.ModelAndView;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -116,8 +117,7 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	@Override
-	public JSONObject saveShop(HttpServletRequest request) {
-		JSONObject jsonObject = new JSONObject();
+	public ModelAndView saveShop(HttpServletRequest request) {
 		String shopid = request.getParameter("shopid");
 		String shopname = request.getParameter("shopname");
 		String type = request.getParameter("type");
@@ -131,15 +131,40 @@ public class ShopServiceImpl implements ShopService{
 				   + " where id ='" + shopid + "'";
 		try {
 			boolean ok = this.baseJdbcDao.executesql(sql);
+			System.out.println("yes");
 			if(ok){
-				jsonObject.put("status", 000);
+				return new ModelAndView("001", "修改成功");
 			}else{
-				jsonObject.put("status", 001);
+				return new ModelAndView("000", "修改失败");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return jsonObject;
+		return new ModelAndView("999", "未知错误");
+	}
+
+	@Override
+	public ModelAndView deletShop(HttpServletRequest request) {
+		ModelAndView modelAndView = null;
+		String shopids = request.getParameter("idArray");
+		String [] shopid = shopids.split(",");
+		for (String shop : shopid) {
+			String sql = " update dsy_shop set" 
+					+ " status ='002'"
+					+ " where id ='" + shop + "'";
+			try {
+				boolean ok = this.baseJdbcDao.executesql(sql);
+				if(ok){
+					modelAndView = new ModelAndView("001", "冻结成功");
+				}else{
+					modelAndView = new ModelAndView("000", "冻结失败");
+					return modelAndView;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return modelAndView;
 	}
 	
 	

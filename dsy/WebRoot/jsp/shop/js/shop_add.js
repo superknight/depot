@@ -7,10 +7,11 @@ $(function(){
 			"url":"saveShop.html",
 			"type":"POST",
 			"data":param,
+			"dataType" : "json",
 			"success":function(data){
-				if(data == '000'){
+				if(data.code == '001'){
 					layer.msg("操作成功",{icon: 1,time:1000});
-				}else if(data == '001'){
+				}else if(data.code == '000'){
 					layer.msg("操作失败",{icon: 6,time:1000});
 				}
 				window.close(); //关闭子窗口.

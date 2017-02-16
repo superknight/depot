@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dsy.module.DsyShop;
 import dsy.service.shop.ShopService;
+import dsy.utils.ModelAndView;
 
 @Controller
 public class ShopController {
@@ -47,8 +48,16 @@ public class ShopController {
 	
 	@RequestMapping(value = "shop/saveShop.html", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject saveShop(HttpServletRequest request){
-		JSONObject jsonObject = this.shopService.saveShop(request);
-		return jsonObject;
+	public ModelAndView saveShop(HttpServletRequest request){
+		ModelAndView modelAndView = this.shopService.saveShop(request);
+		return modelAndView;
 	}
+	
+	@RequestMapping(value = "shop/deletShop.html", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView deletShop(HttpServletRequest request){
+		ModelAndView modelAndView = this.shopService.deletShop(request);
+		return modelAndView;
+	}
+	
 }

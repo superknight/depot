@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 import dsy.module.DsyShop;
+import dsy.utils.ModelAndView;
 
 import net.sf.json.JSONObject;
 
@@ -28,6 +29,13 @@ public interface ShopService {
 	 * 修改shopid对应数据
 	 * @return
 	 */
-	public JSONObject saveShop(HttpServletRequest request);
+	public ModelAndView saveShop(HttpServletRequest request);
+
+	/**
+	 * 批量冻结
+	 * @param request
+	 * @return
+	 */
+	public ModelAndView deletShop(HttpServletRequest request);
 
 }
