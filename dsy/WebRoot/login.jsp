@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>电商平台安全管理系统</title>
 	<link href="<%=request.getContextPath()%>/static/lib/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/jquery/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/jquery/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/static/lib/bootstrap/js/bootstrap.js"></script>
 	<style type="text/css">
 h4{

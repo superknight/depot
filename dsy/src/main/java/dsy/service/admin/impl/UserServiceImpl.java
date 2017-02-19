@@ -1,9 +1,7 @@
 package dsy.service.admin.impl;
 
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +16,7 @@ import dsy.dao.BaseJdbcDao;
 import dsy.module.SecUser;
 import dsy.service.admin.UserService;
 import net.sf.json.JSONObject;
+import util.DateUtil;
 import util.PagesBean;
 import util.StringUtil;
 
@@ -151,7 +150,6 @@ public class UserServiceImpl implements UserService {
 		String sql = "";
 		JSONObject returnData = new JSONObject();
 
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); //格式化当前系统日期
 		//获取创建人
 		SecUser creat = (SecUser) request.getSession().getAttribute("user");
 		String creator = creat.getUsername();
@@ -167,14 +165,19 @@ public class UserServiceImpl implements UserService {
 					+"','"+user.getAddress()
 					+"','"+user.getStatus()
 					+"','"+creator
-					+"','"+df.format(new Date())
+					+"','"+DateUtil.Now()
 					+"')";
-			
+			if(checkUser(user.getUsername()))
+			{
+				returnData.put("msg", "003");
+			}
+			else{
 			if (this.baseJdbcDao.executesql(sql)) {
 				returnData.put("msg", "000");
 			} else {
 				returnData.put("msg", "001");
 			   }
+			}
 		}
 		//修改
 		else{
@@ -189,7 +192,7 @@ public class UserServiceImpl implements UserService {
 					  + "',status='" + user.getStatus()
 					  + "',phone='" + user.getPhone() 
 					  + "',last_update='" + creator
-					  + "',last_update_time='" + df.format(new Date())
+					  + "',last_update_time='" + DateUtil.Now()
 					  + "' where id=" + user.getId();
 				if (this.baseJdbcDao.executesql(sql)) {
 
@@ -230,6 +233,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public JSONObject deleteUser(HttpServletRequest request) {
 		String idArray = request.getParameter("idArray");
+		String[] str = idArray.split(",");
 		String checksql = "select count(*) as count from sec_user where id in ("+idArray+") and id <> 1";
 		JSONObject ret = new JSONObject();
 		SqlRowSet rs = this.baseJdbcDao.execRowset(checksql);
@@ -238,7 +242,7 @@ public class UserServiceImpl implements UserService {
 			num = rs.getInt("count");
 		}
 		//检查删除的用户是否包含超级用户
-		if(num > 0){
+		if(num == str.length){
 		String delsql = "delete from sec_user where id in (" + idArray
 				+ ")";
 		   if(this.baseJdbcDao.executesql(delsql)){
@@ -253,5 +257,22 @@ public class UserServiceImpl implements UserService {
 		}
 		return ret;
 	}
+
+	@Override
+	public Boolean checkUser(String username) {
+		String sql=" select count(*) as count from sec_user where username='"+username+"'";
+		SqlRowSet rs = this.baseJdbcDao.execRowset(sql);
+		int num = 0;
+		while(rs.next()){
+			num=rs.getInt("count");
+		}
+		if(num > 0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	
 }

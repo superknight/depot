@@ -2,7 +2,7 @@ $(function(){
 	var index=layer.load(2);
 	var userid=getUrlParam("userId");
 	$.ajax({
-		"url":"getUserRole.html",
+		"url":"admin/getUserRole.html",
 		"type":"POST",
 		"data":{"userid":userid},
 		"success":function(data){
@@ -35,7 +35,7 @@ $(function(){
 		var num=id_array.length;
 		if(num==1){
 			$.ajax({
-				"url":"saveUserRole.html",
+				"url":"admin/saveUserRole.html",
 				"type":"POST",
 				"data":{"userid":userid,"roleid":id_array.join(",")},
 				"success":function(data){

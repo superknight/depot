@@ -7,31 +7,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * 时间日期处理类
- * <p>
- * Title: 公路监测
- * </p>
- * <p>
- * Description: 公路车辆智能监测系统
- * </p>
- * <p>
- * Copyright: 
- * </p>
- * <p>
- * Company: 风能组
- * </p>
- * 
- * @author 胡如根
- * @version 1.0
- */
 public class DateUtil {
 	
-//	public static Logger logger=Logger.getLogger(DateUtil.class);
 	
 	public DateUtil() {
 	}
 
+	/**
+	 * 获取当前的日期
+	 * @return
+	 */
+	public static String Now(){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); //格式化当前系统日期
+		return df.format(new Date());
+	}
+	
 	public static String format(Calendar calendar, String dateFormat) {
 		if (calendar == null)
 			return null;

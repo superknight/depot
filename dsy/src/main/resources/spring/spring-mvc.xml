@@ -79,4 +79,7 @@
 		</property>
 	</bean>
 	
+	<!-- AOP注解支持 -->
+   <!--  <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /> -->
 </beans>

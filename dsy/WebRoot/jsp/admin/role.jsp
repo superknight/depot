@@ -30,7 +30,7 @@
     <i class="Hui-iconfont">&#xe60c;</i> 修改</a>
     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
     <i class="Hui-iconfont">&#xe6e2;</i> 删除</a> 
-    </span> <span class="r">共有数据：<strong id="total"></strong>条</span> </div>
+    </span></div>
     <div class="mt-20">
         <table id="dataTable" class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>

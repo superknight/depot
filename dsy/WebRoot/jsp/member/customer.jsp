@@ -29,13 +29,11 @@
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> 
     <span class="l">
-    <a class="btn btn-primary radius" onclick="adminUser_add('添加信息','user-add.html')" href="javascript:;">
-    <i class="Hui-iconfont">&#xe600;</i> 添加</a>
-    <a class="btn btn-warning radius" id="updateuser" href="javascript:;">
-    <i class="Hui-iconfont">&#xe60c;</i> 修改</a>
-    <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
-    <i class="Hui-iconfont">&#xe6e2;</i> 冻结</a> 
-    </span> <span class="r">共有数据：<strong id="total"></strong>条</span> </div>
+    <a href="javascript:;" onclick="freeze()" class="btn btn-danger radius">
+    <i class="Hui-iconfont">&#xe6e2;</i>冻结</a>
+    <a href="javascript:;" onclick="unfreeze()" class="btn btn-primary radius">
+    <i class="Hui-iconfont">&#xe6e2;</i>解冻</a> 
+    </span> <span class="r"></div>
     <div class="mt-20">
         <table id="dataTable" class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
@@ -46,10 +44,10 @@
                     <th width="120">密码</th>
                     <th width="120">状态</th>
                     <th width="120">邮箱</th>
+                    <th width="120">地址</th>
                     <th width="120">注册时间</th>
                     <th width="120">最后修改人</th>
                     <th width="120">最后修改时间</th>
-                    <th width="120">操作</th>
                 </tr>
             </thead>
             <tbody>

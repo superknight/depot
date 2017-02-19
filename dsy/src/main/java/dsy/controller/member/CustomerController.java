@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import dsy.service.member.CustomerService;
 import net.sf.json.JSONObject;
+import util.Response2JSON;
 
 @Controller
 public class CustomerController {
@@ -33,5 +34,25 @@ public class CustomerController {
 				e.printStackTrace();
 		       }
 				return data;
-			}
+	}
+	
+	@RequestMapping("member/unfreezeCustomer.html")
+	@ResponseBody
+	public JSONObject unfreezeCustomer(HttpServletRequest request){
+		if(this.cService.unfreezeCustomer(request)){
+			return Response2JSON.toJSON("解冻成功！", "000");
+		}else{
+			return Response2JSON.toJSON("解冻失败！", "001");
+		}
+	}
+	
+	@RequestMapping("member/freezeCustomer.html")
+	@ResponseBody
+	public JSONObject freezeCustomer(HttpServletRequest request){
+		if(this.cService.freezeCustomer(request)){
+			return Response2JSON.toJSON("冻结成功！", "000");
+		}else{
+			return Response2JSON.toJSON("冻结失败！", "001");
+		}
+	}
 }

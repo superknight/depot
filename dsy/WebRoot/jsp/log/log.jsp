@@ -5,7 +5,7 @@
   <%@include file="/static/public.jsp"%>
     <title>系统日志</title>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/system/js/log.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/jsp/log/js/log.js"></script>
   </head>
   <body>
    <nav class="breadcrumb"><i class="Hui-iconfont" style="font-size: 18px;">&#xe67f;</i> 首页 
@@ -30,14 +30,14 @@
 	<span class="l">
 	<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
 	<i class="Hui-iconfont">&#xe6e2;</i> 删除</a> 
-	</span> <span class="r">共有数据：<strong id="total">3</strong>条</span> </div>
+	</span></div>
 	<div class="mt-20">
 		<table id="dataTable" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" id="selectAll" name="" value=""></th>
-					<th width="200">用户</th>
-					<th width="250">操作</th>
+					<th width="200">操作人</th>
+					<th width="250">描述</th>
 					<th width="220">时间</th>
 				</tr>
 			</thead>

@@ -6,7 +6,7 @@ function reflushTable() {
 $(function() {
 	var currentDTOpt = {
 		"ajax" : {
-			"url" : "adminUser/getAdminUserList.html",
+			"url" : "admin/getAdminUserList.html",
 			"type" : "POST",
 			"data" : function(d) {
 				// 添加额外的参数传给服务器
@@ -166,7 +166,6 @@ function authorize(userid, name, user, title, url) {
 				+ user,
 		area : [ '500px', '350px' ],
 		cancel: function(index){ 
-//			window.location.reload();
 			table.draw(true);
 		}
 	});
@@ -198,20 +197,20 @@ function adminUser_edit(userid, title, url) {
 /* 用户-删除 */
 function datadel() {
 	var id_array = new Array();
-	$("input[type='checkbox']:checked").each(function() {
+	$("#dataTable tbody input[type='checkbox']:checked").each(function() {
 		id_array.push($(this).val());// 向数组中添加元素
 	});
 	var num = id_array.length;
 	if (num <= 0) {
 		layer.msg("删除请至少选择一项！", {
-			icon : 1,
+			icon : 2,
 			time : 1000
 		});
 	}
 	if (num > 0)
 		layer.confirm('确认要删除吗？', function(index) {
 			$.ajax({
-				"url" : "deleteUser.html",
+				"url" : "admin/deleteUser.html",
 				"type" : "POST",
 				"data" : {
 					"idArray" : id_array.join(",")
@@ -230,9 +229,8 @@ function datadel() {
 					}
 				},
 				"error" : function(data) {
-					layer.msg("操作失败", {icon : 6,time : 1000});
+					layer.msg("操作失败", {icon : 2,time : 1000});
 				}
 			});
-//			window.location.reload();
 		});
 }

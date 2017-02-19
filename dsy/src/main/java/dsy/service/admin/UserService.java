@@ -18,6 +18,9 @@ public interface UserService {
 	//获取单个用户的信息：用于修改预览
 	public List<SecUser> getSingleUser(HttpServletRequest request);
 	
+	//查询新增用户账号是否已经重复
+	public Boolean checkUser(String username);
+	
 	//新增和修改用户
 	public JSONObject saveAndEditUser(SecUser user,HttpServletRequest request) throws Exception;
 	

@@ -93,4 +93,20 @@ public class CustomerServiceImpl implements CustomerService {
 			list);
 	}
 
+	//冻结
+	@Override
+	public boolean freezeCustomer(HttpServletRequest request) {
+		String idArray = request.getParameter("idArray");
+		String sql = "update dsy_user set status = '1' where id in ("+idArray+")";
+		return this.baseJdbcDao.executesql(sql);
+	}
+
+	//解冻
+	@Override
+	public boolean unfreezeCustomer(HttpServletRequest request) {
+		String idArray = request.getParameter("idArray");
+		String sql = "update dsy_user set status = '0' where id in ("+idArray+")";
+		return this.baseJdbcDao.executesql(sql);
+	}
+
 }

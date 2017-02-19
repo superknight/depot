@@ -46,7 +46,7 @@ public class AdminUserController {
 	}
 	
 	// 获取用户列表
-	@RequestMapping("adminUser/getAdminUserList.html")
+	@RequestMapping("admin/getAdminUserList.html")
 	@ResponseBody
 	public JSONObject getAdminUserList(HttpServletRequest request) {
 			JSONObject data = null;
@@ -60,14 +60,14 @@ public class AdminUserController {
 		}
 	
 	// 获取角色名称
-	@RequestMapping("getRoleName.html")
+	@RequestMapping("admin/getRoleName.html")
 	@ResponseBody
 	public List<JSONObject> getRoleName() {
 		return uService.getRoleName();
 	}
 	
 	// 新增与编辑
-	@RequestMapping("saveAndEditUser.html")
+	@RequestMapping("admin/saveAndEditUser.html")
 	@ResponseBody
 	public JSONObject saveAndEditUser(SecUser user,HttpServletRequest request) {
 	   JSONObject data = null;
@@ -80,7 +80,7 @@ public class AdminUserController {
 		}
 	
 	//获取用户角色
-	@RequestMapping("getUserRole.html")
+	@RequestMapping("admin/getUserRole.html")
 	@ResponseBody
 	public JSONObject getUserRole(HttpServletRequest request) {
 
@@ -94,7 +94,7 @@ public class AdminUserController {
 	}
 	
 	//角色授权
-	@RequestMapping("saveUserRole.html")
+	@RequestMapping("admin/saveUserRole.html")
 	@ResponseBody
 	public JSONObject saveUserRole(HttpServletRequest request) {
 		JSONObject data = new JSONObject();
@@ -107,7 +107,7 @@ public class AdminUserController {
 	}
 	
 	// 删除用户信息
-	@RequestMapping("deleteUser.html")
+	@RequestMapping("admin/deleteUser.html")
 	@ResponseBody
 	public JSONObject deleteUser(HttpServletRequest request) {
 		JSONObject data = null;
@@ -120,7 +120,7 @@ public class AdminUserController {
 	}
 	
 	// 获取单个用户信息
-	@RequestMapping("getSingleUser.html")
+	@RequestMapping("admin/getSingleUser.html")
 	@ResponseBody
 	public List<SecUser> getSingleUser(HttpServletRequest request) {
 		List<SecUser> data = null;

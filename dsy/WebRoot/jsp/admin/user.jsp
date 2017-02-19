@@ -19,11 +19,6 @@
    </nav>
      <div class="pd-20">
     <div id="paramContainer" class="text-c">
-    <!-- 部门：
-    <span class="select-box inline">
-         <select id="dept" name="dept" class="select">
-        </select>
-    </span> -->
     &nbsp;&nbsp;用户：
     <input id="username" type="text" class="input-text" style="width:250px" placeholder="输入用户名称" id="" name=""> 
     <button name="search" id="search" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i>查询</button>
@@ -36,7 +31,7 @@
     <i class="Hui-iconfont">&#xe60c;</i> 修改</a>
     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
     <i class="Hui-iconfont">&#xe6e2;</i> 删除</a> 
-    </span> <span class="r">共有数据：<strong id="total"></strong>条</span> </div>
+    </span></div>
     <div class="mt-20">
         <table id="dataTable" class="table table-border table-bordered table-bg table-hover table-sort">
             <thead>
@@ -45,11 +40,11 @@
                     <th width="80">姓名</th>
                     <th width="80">用户账号</th>
                     <th width="80">用户密码</th>
-                    <th width="120">性别</th>
+                    <th width="80">性别</th>
                     <th width="80">角色</th>
                     <th width="80">电话号码</th>
                     <th width="80">邮箱</th>
-                    <th width="80">地址</th>
+                    <th width="120">地址</th>
                     <th width="80">状态</th>
                     <th width="80">创建人</th>
                     <th width="80">创建时间</th>

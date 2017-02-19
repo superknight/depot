@@ -43,15 +43,14 @@ $(function() {
 					"className" : "text-c",
 					"orderable" : false,
 					"render" : function(data, type, full) {
-						var str = '未激活';
 						var html = "";
 						if (data == '1') {
-							str = '已激活';
-							html += '<span class="label label-success radius">'
+							str = '被冻结中';
+							html += '<span class="label label-info radius">'
 									+ str + '</span>';
 						} else if (data == '0') {
-							str = '未激活';
-							html += '<span class="label label-info radius">'
+							str = '正常';
+							html += '<span class="label label-success radius">'
 									+ str + '</span>';
 						}
 						return html;
@@ -60,6 +59,10 @@ $(function() {
 				},
 				{
 					"data" : "email",
+					"className" : "text-c"
+				},
+				{ 
+					"data" : null,
 					"className" : "text-c"
 				},
 				{
@@ -75,30 +78,21 @@ $(function() {
 					"className" : "text-c"
 				}
 				],
-		"columnDefs" : [ { // 定制需要操作的列
-			"targets" : [ 9 ],
-			"data" : "id",
-			"orderable" : false,
-			"className" : "text-c",
-			// data:代表当前的值，full:代表当前行的数据
-			"render" : function(data, type, full) {
-				var html = '';
-				if (data == '1') {
-					html += '';
-				} else {
-					html += '<a style="text-decoration:none" onClick="authorize(\''
-							+ full.id
-							+ '\',\''
-							+ full.name
-							+ '\',\''
-							+ full.username
-							+ '\',\'角色授权\',\'userAuthorize.html\')" href="javascript:;" title="授予角色">';
-					html += '<i class="Hui-iconfont" style="font-size:18px;color:#B2ED83;">&#xe6cc;</i>授予角色</a>';
-				}
-				return html;
-			}
-		}],
-		"order":[[1, 'asc']]
+		"columnDefs" : [ 
+		                {
+		                	"targets" : [ 6 ],
+		        			"data" : "id",
+		        			"orderable" : false,
+		        			"className" : "text-c",
+		        			"render" :function(data,type,full){
+		        				var html = '<a style="text-decoration:none" onClick="look_address(\''
+		        					+ full.id + '\',\'查看<'+full.customer+'>地址\',\'getAddress.html\')"'
+		        					+'href="javascript:;" title="查看地址">查看地址</a>';
+		        				return html;
+		        			}
+		                }
+		                ],
+		"order":[[7, 'asc']]
 	};
 	var dtOption = $.extend({},DT_COMMON_CONFIG, currentDTOpt); // JSON 合并
 	 table = $('.table-sort').DataTable(dtOption); // 渲染DT
@@ -133,5 +127,70 @@ $(function() {
 		}
 
 	});
-
 });
+
+/*查看-地址*/
+function look_address(id,title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url+"?customerId="+id,
+		area: ['60%', '80%'],
+		cancel: function(index){ 
+			table.draw(true);
+		}
+	});
+}
+
+var id_array = new Array();
+/*冻结*/
+function freeze(){
+	$("#dataTable tbody input[type='checkbox']:checked").each(function() {
+		id_array.push($(this).val());// 向数组中添加元素
+	});
+	$.ajax({
+		"url":"member/freezeCustomer.html",
+		"type":"POST",
+		"data":{"idArray":id_array.toString()},
+		"success":function(data){
+			var list=$.parseJSON(data);
+			console.log(list);
+			if(list.status=="000"){
+				layer.msg("冻结成功！", {icon: 1,time:1000});
+				table.draw(true);
+			}
+			if(list.status=="001"){
+				layer.msg("冻结失败！", {icon: 2,time:1000});
+			}
+		},
+	    "error":function(data){
+	    	layer.msg("操作失败",{icon: 2,time:1000});
+	    }
+	});
+}
+
+/*解冻*/
+function unfreeze(){
+	$("#dataTable tbody input[type='checkbox']:checked").each(function() {
+		id_array.push($(this).val());// 向数组中添加元素
+	});
+	$.ajax({
+		"url":"member/unfreezeCustomer.html",
+		"type":"POST",
+		"data":{"idArray":id_array.toString()},
+		"success":function(data){
+			var list=$.parseJSON(data);
+			console.log(list);
+			if(list.status=="000"){
+				layer.msg("解冻成功！", {icon: 1,time:1000});
+				table.draw(true);
+			}
+			if(list.status=="001"){
+				layer.msg("解冻失败！", {icon: 2,time:1000});
+			}
+		},
+	    "error":function(data){
+	    	layer.msg("操作失败",{icon: 2,time:1000});
+	    }
+	});
+}

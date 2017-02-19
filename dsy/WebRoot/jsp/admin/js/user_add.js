@@ -10,18 +10,15 @@ $(function(){
 	var demo = $("#paramContainer").Validform({
 		tiptype : 2
 	});
-	
 	var userid=getUrlParam("userid");
 	if(userid){
-
 		var index = layer.load(2);
 		$.ajax({
-			"url":"getSingleUser.html",
+			"url":"admin/getSingleUser.html",
 			"type":"POST",
 			"data":{"userid":userid},
 			"success":function(data){
 				var list = $.parseJSON(data);
-				console.log(list[0].name);
 				    $("#id").val(list[0].id);
 				    $("#name").val(list[0].name);
 				    $("#username").val(list[0].username);
@@ -34,7 +31,7 @@ $(function(){
 					layer.close(index); 
 			},
 		    "error":function(data){
-		    	layer.msg(list.msg,{icon: 6,time:1000});
+		    	layer.msg(list.msg,{icon: 5,time:1000});
 		    }
 		});
 	}
@@ -44,14 +41,10 @@ $(function(){
 		if (!demo.check()) {
 			return;
 		}
-		var index = layer.load(1, {
-			shade : [ 0.5, '#fff' ]
-		// 0.1透明度的白色背景
-		});
 		var json = $("#paramContainer").toJson();
 		$.extend(param, json);
 		$.ajax({
-			"url":"saveAndEditUser.html",
+			"url":"admin/saveAndEditUser.html",
 			"type":"POST",
 			"data":param,
 			"success":function(data){
@@ -61,11 +54,7 @@ $(function(){
 					layer.msg("新增成功！", {icon: 1,time:1000});
 				}
 				if(list.msg=="001"){
-					
-					layer.msg("新增失败！", {icon: 6,time:1000});
-				}
-				if(list.mst=="002"){
-					layer.msg("账号不能为空！", {icon: 5,time:1000});
+					layer.msg("新增失败！", {icon: 2,time:1000});
 				}
 				if(list.msg=="003"){
 					layer.msg("该用户已存在！",{icon: 5,time:1000});
@@ -74,14 +63,12 @@ $(function(){
 					layer.msg("修改成功！",{icon: 1,time:1000});
 				}
 				if(list.msg=="101"){
-					layer.msg("修改失败！",{icon: 5,time:1000});
+					layer.msg("修改失败！",{icon: 2,time:1000});
 				}
-//				parent.location.reload(); //刷新父窗口
 			},
 		    "error":function(data){
-		    	layer.msg("操作失败",{icon: 6,time:1000});
+		    	layer.msg("操作失败",{icon: 2,time:1000});
 		    }
 		});
 	});
-	
 });

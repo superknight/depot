@@ -2,13 +2,14 @@ $(function(){
 	var index=layer.load(2);
 	var roleid=getUrlParam("roleid");
 	$.ajax({
-		"url":"Role/getMenus.html",
+		"url":"admin/getMenus.html",
 		"type":"POST",
 		"data":{"roleid":roleid},
 		"success":function(data){
 			var list=$.parseJSON(data);
+			console.log(list);
+			if(list.status == "000"){
 			var array=list.data;
-			
 			var str='<dl class="permission-list">';
 			var arrayNum=array.length-1
 			for(var i=0;i<arrayNum;i++){
@@ -35,9 +36,14 @@ $(function(){
 				$("#menu_"+RMarray[i].id).attr("checked", true);
 			}
 			layer.close(index);
+			}
+			if(list.status == "001"){
+				layer.close(index);
+				layer.msg("请求出错！",{icon: 2,time:1000});
+			}
 		},
 	    "error":function(data){
-	    	layer.msg("操作失败",{icon: 6,time:1000});
+	    	layer.msg("操作失败",{icon: 2,time:1000});
 	    }
 	});
 	
@@ -57,19 +63,17 @@ $(function(){
 		}
 		if(num>=1){
 			$.ajax({
-				"url":"Role/role-authorize.html",
+				"url":"admin/role-authorize.html",
 				"type":"POST",
 				"data":{"roleid":roleid,"menuid":id_array.join(",")},
 				"success":function(data){
 					var list=$.parseJSON(data);
 					if(list.status=='000'){
 						layer.msg(list.data, {
-							icon : 2,
+							icon : 1,
 							time : 1000
 						});
 					}
-					window.close(); //关闭子窗口.
-					parent.location.reload(); //刷新父窗口
 				},
 			    "error":function(data){
 			    	layer.msg("操作失败",{icon: 6,time:1000});
