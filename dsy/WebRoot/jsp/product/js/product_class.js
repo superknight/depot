@@ -1,3 +1,5 @@
+
+//zTree
 var setting = {
 	//显示
 	view:{
@@ -24,14 +26,8 @@ var setting = {
     edit: {
 		enable: true, //设置 zTree 是否处于编辑状态
 		drag: { 	  //isCopy = false; isMove = true 时，所有拖拽操作都是 move
-			isCopy: true,
+			isCopy: false,
 			isMove: false,
-			prev: true, //允许 移动到目标节点前面
-			next: true,  //允许 移动到目标节点后面
-			inner: true,  //允许 成为目标节点的子节点
-			borderMax: 10,  //拖拽节点成为根节点时的 Tree 内边界范围
-			borderMin: -10, //拖拽节点成为根节点时的 Tree 外边界范围
-			minMoveSize: 10, //判定是否拖拽操作的最小位移值
 		}
 	},
 	callback: {
@@ -39,11 +35,35 @@ var setting = {
 //		beforeAsync: beforeAsync,	//异步加载前的回调函数
 		onAsyncError: onAsyncError,  //异步加载错误回调函数
 		onAsyncSuccess: onAsyncSuccess,  //异步加载成功回调函数
-	
 		beforeRemove: beforeRemove, //移除前的回调函数
-		beforeRename: beforeRename,  
+		beforeRename: beforeRename, //修改名字的回调函数 
+		onRename:onRename,  //修改名字之后的操作
+		onRemove:onRemove,
 	}
 };
+
+function onRename(event, treeId, treeNode, isCancel){
+	saveAndEdit(treeNode.id,null,treeNode.name);
+}
+
+function onRemove(event, treeId, treeNode){
+	alert(treeNode.id + ", " + treeNode.name);
+	$.ajax({
+		"url":"product/deleteProductClass.html",
+		"type":"post",
+		"data":{"id":treeNode.id},
+		"success":function(data){
+			var list = $.parseJSON(data);
+			if(list.status == "000")
+			{ layer.msg("删除成功",{icon: 6,time:1000});}
+			if(list.status == "001")
+			{ layer.msg("删除失败！",{icon: 5,time:1000});}	
+		},
+		"error":function(data){
+			layer.msg("请求发生错误！",{icon: 2,time:1000});
+		}
+	});
+}
 
 function onAsyncError(treeId,treeNode){ 
 	layer.msg("加载错误！",{icon: 5,time:1000});
@@ -78,10 +98,12 @@ function addHoverDom(treeId, treeNode) {
 	if (btn) btn.bind("click", function(){
 		var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 		zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"新建文件" + (newCount++)});
+		saveAndEdit(null,treeNode.id,"新建文件"+newCount);
 		return false;
 	});
 };
 function removeHoverDom(treeId, treeNode) {
+	$("#addBtn_"+treeNode.tId).unbind().remove();
 	$("#diyBtn_"+treeNode.id).unbind().remove();
 	$("#diyBtn_space_" +treeNode.id).unbind().remove();
 };
@@ -95,7 +117,154 @@ function ajaxDataFilter(treeId, parentNode, childNodes){
 	return childNodes;
 }		
 
+//新增与修改
+function saveAndEdit(id,pId,name){
+	$.ajax({
+		"url":"product/saveAndEditProductClass.html",
+		"type":"post",
+		"data":{"id":id,"pId":pId,"name":name},
+		"success":function(data){
+			var list = $.parseJSON(data);
+			if(list.msg == "000")
+			{ layer.msg("新增了一个文件",{icon: 6,time:1000});}
+			if(list.msg == "001")
+			{ layer.msg("新增文件失败！",{icon: 5,time:1000});}	
+			if(list.msg == "100")
+			{ layer.msg("重命名成功！",{icon: 6,time:1000});}
+			if(list.msg == "001")
+			{ layer.msg("重命名失败！",{icon: 5,time:1000});}	
+		},
+		"error":function(data){
+			layer.msg("请求发生错误！",{icon: 2,time:1000});
+		}
+	});
+}
+
+
+//dataTable
+var param = {}; //参数对列
+var table; 
+var currentDTOpt = {
+		"ajax" : {
+			"url" : "admin/getAdminUserList.html",
+			"type" : "POST",
+			"data" : function(d) {
+				// 添加额外的参数传给服务器
+				d.extra_search = param;
+			}
+		},
+		"columns" : [ // 数据列
+				{
+					"mDataProp" : "id",
+					"className" : "text-c",
+					"orderable" : false,
+					"render" : function(data, type, full) {
+						var html = '<input type="checkbox" value="' + data
+								+ '" title="' + data + '" id="checkbox_' + data
+								+ '" name="checkbox_' + data + '" />';
+						return html;
+					}
+				},
+
+				{
+					"data" : "name",
+					"className" : "text-c"
+				},
+				{
+					"data" : "username",
+					"className" : "text-c"
+				},
+				{
+					"data" : "password",
+					"className" : "text-c"
+				},
+				{
+					"data" : "sex",
+					"className" : "text-c"
+				},
+				{
+					"data" : "role",
+					"className" : "text-c"
+				},
+				{
+					"data" : "phone",
+					"className" : "text-c"
+				},
+				{
+					"data" : "email",
+					"className" : "text-c"
+				},
+				{
+					"data" : "address",
+					"className" : "text-c"
+				},
+				{
+					"mDataProp" : "status",
+					"className" : "text-c",
+					"orderable" : false,
+					"render" : function(data, type, full) {
+						var str = '未激活';
+						var html = "";
+						if (data == '1') {
+							str = '已激活';
+							html += '<span class="label label-success radius">'
+									+ str + '</span>';
+						} else if (data == '0') {
+							str = '未激活';
+							html += '<span class="label label-info radius">'
+									+ str + '</span>';
+						}
+						return html;
+					}
+
+				}, {
+					"data" : "creator",
+					"className" : "text-c"
+				},
+				{
+					"data" : "createTime",
+					"className" : "text-c"
+				},
+				{
+					"data" : "lastUpdate",
+					"className" : "text-c"
+				},
+				{
+					"data" : "lastUpdateTime",
+					"className" : "text-c"
+				},
+				{
+					"data" : "remark",
+					"className" : "text-c"
+				}],
+		"columnDefs" : [ { // 定制需要操作的列
+			"targets" : [ 14 ],
+			"data" : "id",
+			"orderable" : false,
+			"className" : "text-c",
+			// data:代表当前的值，full:代表当前行的数据
+			"render" : function(data, type, full) {
+				var html = '';
+				if (data == '1') {
+					html += '';
+				} else {
+					html += '<a style="text-decoration:none" onClick="authorize(\''
+							+ full.id
+							+ '\',\''
+							+ full.name
+							+ '\',\''
+							+ full.username
+							+ '\',\'角色授权\',\'userAuthorize.html\')" href="javascript:;" title="授予角色">';
+					html += '<i class="Hui-iconfont" style="font-size:18px;color:#B2ED83;">&#xe6cc;</i>授予角色</a>';
+				}
+				return html;
+			}
+		}],
+		"order":[[1, 'asc']]
+	};
 $(function(){
 	var t = $("#treeDemo");
 	t = $.fn.zTree.init(t, setting);
 });
+
+

@@ -1,6 +1,5 @@
 package dsy.service.product.Impl;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,31 +29,68 @@ public class ProductClassServiceImpl implements ProductClassService {
 		
 		SqlRowSet rs = baseJdbcDao.execRowset(sql);
 		List<JSONObject> list = new ArrayList<JSONObject>();
-//		List<DsyProductClass> list = new ArrayList<DsyProductClass>();
 		while(rs.next()){
 			JSONObject ob = new JSONObject();
 			
 			ob.put("id", rs.getString("id"));
-			ob.put("pId", rs.getString("class_id"));
-			ob.put("name", rs.getString("classname"));
-			String content = rs.getString("content");
-			if(StringUtil.isNotBlank(content)){
-				ob.put("file", content);
-			}
-			System.out.println(ob);
+			ob.put("pId", rs.getString("pId"));
+			ob.put("name", rs.getString("name"));
 			list.add(ob);
-//			DsyProductClass spClass = new DsyProductClass();
-//			spClass.setId(rs.getString("id"));
-//			spClass.setClassname(rs.getString("classname"));
-//			spClass.setClass_id(rs.getString("class_id"));
-//			spClass.setClass_grade(rs.getString("class_grade"));
-//			spClass.setContent(rs.getString("content"));
-//			spClass.setDescripe(rs.getString("descripe"));
-//			spClass.setCreater(rs.getString("creater"));
-//			spClass.setCreate_time(rs.getString("create_time"));
-//			list.add(spClass);
 		}
 		return list;
+	}
+
+	@Override
+	public JSONObject getProductClassList(HttpServletRequest request) throws Exception {
+		String countSql = "select count(*) from dsy_user where 1=1 ";
+		
+		//数据库返回的字段要与前端dataTable的字段和Bean类的字段名字都要相同
+		String fullSql ="";
+		return null;
+	}
+
+	@Override
+	public JSONObject saveAndEditProductClass(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		String pId = request.getParameter("pId");
+		String name = request.getParameter("name");
+		String sql = "";
+		JSONObject returnData = new JSONObject();
+		//新增
+		if(StringUtil.isBlank(id)){
+			sql = "insert into dsy_product_class (name,pId) "
+					+ "values ('"+name+"',"+pId+")";
+			
+			if (this.baseJdbcDao.executesql(sql)) {
+				returnData.put("msg", "000");
+			} else {
+				returnData.put("msg", "001");
+			   }
+		}
+		else{  //修改
+			sql = "update dsy_product_class set name='"+name
+					+"' where id ="+id;
+			if (this.baseJdbcDao.executesql(sql)) {
+				returnData.put("msg", "100");
+			} else {
+				returnData.put("msg", "101");
+			   }
+		}
+		return returnData;
+	}
+
+	@Override
+	public JSONObject delProductClass(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		String sql = "delete from dsy_product_class where id ="+id;
+		JSONObject ret = new JSONObject();
+		if(this.baseJdbcDao.executesql(sql)){
+			   ret.put("status", "000"); //删除成功
+		   }
+		   else{
+			   ret.put("status", "001"); //删除失败
+		   }
+		return ret;
 	}
 
 }
