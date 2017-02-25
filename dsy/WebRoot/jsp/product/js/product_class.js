@@ -146,7 +146,7 @@ var param = {}; //参数对列
 var table; 
 var currentDTOpt = {
 		"ajax" : {
-			"url" : "admin/getAdminUserList.html",
+			"url" : "product/getProductList.html",
 			"type" : "POST",
 			"data" : function(d) {
 				// 添加额外的参数传给服务器
@@ -167,104 +167,93 @@ var currentDTOpt = {
 				},
 
 				{
-					"data" : "name",
+					"data" : "productName",
 					"className" : "text-c"
 				},
 				{
-					"data" : "username",
+					"data" : null,
 					"className" : "text-c"
 				},
 				{
-					"data" : "password",
+					"data" : "pId",
 					"className" : "text-c"
 				},
 				{
-					"data" : "sex",
+					"data" : "format",
 					"className" : "text-c"
 				},
 				{
-					"data" : "role",
+					"data" : "productPlace",
 					"className" : "text-c"
 				},
 				{
-					"data" : "phone",
+					"data" : "supplier",
 					"className" : "text-c"
-				},
-				{
-					"data" : "email",
-					"className" : "text-c"
-				},
-				{
-					"data" : "address",
-					"className" : "text-c"
-				},
-				{
-					"mDataProp" : "status",
-					"className" : "text-c",
+				}],
+				"columnDefs" : [ { // 定制需要操作的列
+					"targets" : [ 2 ],
+					"data" : "pictureId",
 					"orderable" : false,
+					"className" : "text-c",
+					// data:代表当前的值，full:代表当前行的数据
 					"render" : function(data, type, full) {
-						var str = '未激活';
-						var html = "";
+						var html = '';
 						if (data == '1') {
-							str = '已激活';
-							html += '<span class="label label-success radius">'
-									+ str + '</span>';
-						} else if (data == '0') {
-							str = '未激活';
-							html += '<span class="label label-info radius">'
-									+ str + '</span>';
+							html += '';
+						} else {
+							html += '<a style="text-decoration:none" onClick="authorize(\''
+									+ full.id
+									+ '\',\''
+									+ full.name
+									+ '\',\''
+									+ full.username
+									+ '\',\'角色授权\',\'userAuthorize.html\')" href="javascript:;" title="授予角色">';
+							html += '<i class="Hui-iconfont" style="font-size:18px;color:#B2ED83;">&#xe6cc;</i>查看图片</a>';
 						}
 						return html;
 					}
-
-				}, {
-					"data" : "creator",
-					"className" : "text-c"
-				},
-				{
-					"data" : "createTime",
-					"className" : "text-c"
-				},
-				{
-					"data" : "lastUpdate",
-					"className" : "text-c"
-				},
-				{
-					"data" : "lastUpdateTime",
-					"className" : "text-c"
-				},
-				{
-					"data" : "remark",
-					"className" : "text-c"
 				}],
-		"columnDefs" : [ { // 定制需要操作的列
-			"targets" : [ 14 ],
-			"data" : "id",
-			"orderable" : false,
-			"className" : "text-c",
-			// data:代表当前的值，full:代表当前行的数据
-			"render" : function(data, type, full) {
-				var html = '';
-				if (data == '1') {
-					html += '';
-				} else {
-					html += '<a style="text-decoration:none" onClick="authorize(\''
-							+ full.id
-							+ '\',\''
-							+ full.name
-							+ '\',\''
-							+ full.username
-							+ '\',\'角色授权\',\'userAuthorize.html\')" href="javascript:;" title="授予角色">';
-					html += '<i class="Hui-iconfont" style="font-size:18px;color:#B2ED83;">&#xe6cc;</i>授予角色</a>';
-				}
-				return html;
-			}
-		}],
 		"order":[[1, 'asc']]
 	};
 $(function(){
 	var t = $("#treeDemo");
 	t = $.fn.zTree.init(t, setting);
+	
+	var dtOption = $.extend({},DT_COMMON_CONFIG, currentDTOpt); // JSON 合并
+	 table = $('.table-sort').DataTable(dtOption); // 渲染DT
+	//检索
+	$("#search").click(function() {
+		var json = $("#paramContainer").toJson();
+		$.extend(param, json);
+		table.draw(true);
+	});
+
+	selectCheckAndTable(); // 全选与table行选中
+	
+	
+	$("#submit").click(function(){
+		$.ajax({
+			"url":"product/addProductFirst.html",
+			"type":"post",
+			"data":{"name":$("#name").val()},
+			"success":function(data){
+				if(list.msg == "000")
+				{ 
+					layer.msg("新增一级目录成功！",{icon: 6,time:1000});
+					t = $.fn.zTree.init(t, setting);
+				}
+				if(list.msg == "001")
+				{ layer.msg("新增一级目录失败！",{icon: 5,time:1000});}
+			},
+			"error":function(data){
+				layer.msg("请求发生错误！",{icon: 2,time:1000});
+			}
+		});
+	});
+	
+	$("#reset").click(function(){
+		$("#name").val("");
+	});
 });
 
 

@@ -13,11 +13,14 @@ public interface ProductClassService {
 	public List<JSONObject> productClass(HttpServletRequest request) throws SQLException;
 	
 	//获取客户列表
-	public JSONObject getProductClassList(HttpServletRequest request) throws Exception;
+	public JSONObject getProductList(HttpServletRequest request) throws Exception;
 	
 	//新增和修改
 	public JSONObject saveAndEditProductClass(HttpServletRequest request);
 	
 	//删除
 	public JSONObject delProductClass(HttpServletRequest request);
+	
+	//新增一级目录
+	public JSONObject addProductFirst(HttpServletRequest request);
 }

@@ -3,7 +3,6 @@ package dsy.dao.impl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;

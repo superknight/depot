@@ -26,6 +26,20 @@ public class ProductClassController {
 		return "jsp/product/product_class";
 	}
 	
+	//获取产品表
+	@RequestMapping("product/getProductList.html")
+	@ResponseBody
+	public JSONObject getProductList(HttpServletRequest request){
+		JSONObject data = null;
+		try {
+			data = pcService.getProductList(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	
 	//获取产品类目录
 	@RequestMapping("product/getProductClass.html")
 	@ResponseBody
@@ -52,6 +66,18 @@ public class ProductClassController {
 		return data;
 	}
 	
+	//新增一级目录
+	@RequestMapping("product/addProductFirst.html")
+	@ResponseBody
+	public JSONObject addProductFirst(HttpServletRequest request){
+		JSONObject data = null;
+		try {
+			data = pcService.addProductFirst(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 	//删除
 	@RequestMapping("product/deleteProductClass.html")
 	@ResponseBody
