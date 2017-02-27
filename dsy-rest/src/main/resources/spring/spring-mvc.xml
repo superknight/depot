@@ -17,6 +17,7 @@
            				http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	<!-- 注解驱动控制器 -->
 	<context:component-scan base-package="dsy.controller"/>
+ 	
  	<!-- POJO 转换为 JSON 并且时间格式化 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
@@ -79,6 +80,6 @@
 	</bean>
 	
 	<!-- AOP注解支持 -->
-  <!--  <aop:aspectj-autoproxy proxy-target-class="true"/>
-   <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /> -->
+   <!--  <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /> -->
 </beans>

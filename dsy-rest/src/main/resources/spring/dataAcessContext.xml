@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.3.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+                        http://www.springframework.org/schema/aop
+          				http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+          				http://www.springframework.org/schema/jdbc 
+                        http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+          				http://www.springframework.org/schema/tx
+          				http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">	
+	<!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
+	<context:component-scan base-package="dsy">
+		<context:exclude-filter type="annotation"
+					expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<!-- 引入数据库配置文件 --><!-- 
+	<context:property-placeholder location="classpath:config/jdbc.properties"/>  -->
+	
+	<bean id="propertyConfigure" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="locations">
+			<value>classpath:config/jdbc.properties</value>
+			</property>
+	</bean>
+	
+	 <!-- jdbc -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+	
+	<!-- 数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+	destroy-method="close">
+		 <!-- 数据库基本信息配置 -->
+         <property name = "url" value = "${url}" />  
+         <property name = "username" value = "${username}" />  
+         <property name = "password" value = "${password}" />  
+         <property name = "driverClassName" value = "${driverClassName}" />  
+         <property name = "filters" value="${filters}"/>
+          <!-- 最大并发连接数 -->
+         <property name = "maxActive" value = "${maxActive}" />
+
+         <!-- 初始化连接数量 -->
+         <property name = "initialSize" value = "${initialSize}" />
+
+         <!-- 配置获取连接等待超时的时间 -->
+         <property name = "maxWait" value = "${maxWait}" />
+
+         <!-- 最小空闲连接数 -->
+         <property name = "minIdle" value = "${minIdle}" /> 
+	</bean>
+      
+	<!-- 配置Dao -->
+	<!-- Dao -->
+     <bean id="baseJdbcDao" class="dsy.dao.impl.BaseJdbcDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+	<!-- JDBC事务管理器  -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 切面 -->
+	<aop:config>
+		<aop:pointcut id="point"
+			expression="execution(* dsy.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="point" />
+	</aop:config>
+	<!-- 事务的通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	      <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="REQUIRED" />
+            <tx:method name="count*" propagation="REQUIRED" />
+            <tx:method name="find*" propagation="REQUIRED" />
+            <tx:method name="list*" propagation="REQUIRED" />
+            <tx:method name="load*" />
+            <tx:method name="*" />
+            <!--默认其他方法都是REQUIRED-->
+            <tx:method name="*"/>
+        </tx:attributes>
+	</tx:advice>
+	
+	 
+</beans>
