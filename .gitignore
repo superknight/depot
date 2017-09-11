@@ -36,21 +36,27 @@ classes/
 target/
 test-classes/
 
-#for InteliJ IDEA 
-.idea/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
 *.ipr
-*.iws
 
-#Gradle
-local.properties
-.gradle/
-gradlew.bat
-
-.svn/
-*.log
-
-*.apk
-*.ap_
-.navigation/
-*.dex
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
